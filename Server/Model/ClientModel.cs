@@ -43,7 +43,7 @@ namespace Server.Model
                     try
                     {
                         message = GetMessage();
-                        OnGetMessage?.Invoke(this, message);
+                        OnGetMessage(this, message);
                     }
                     catch
                     {

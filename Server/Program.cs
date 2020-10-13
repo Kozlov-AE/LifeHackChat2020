@@ -1,13 +1,14 @@
 ﻿using Server.Model;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Server
 {
     class Program
     {
         static ServerModel server;
-        static Thread listenThread;
+        static Task serverTask;
         static void Main(string[] args)
         {
             try
@@ -16,8 +17,8 @@ namespace Server
                 server.OnStarted += Console.WriteLine;
                 server.OnClientGetsMessage += Console.WriteLine;
                 server.OnException += Console.WriteLine;
-                listenThread = new Thread(new ThreadStart(server.Listen));
-                listenThread.Start();
+                serverTask = Task.Factory.StartNew(server.Listen);
+                serverTask.Wait();
             }
             catch (Exception ex)
             { 

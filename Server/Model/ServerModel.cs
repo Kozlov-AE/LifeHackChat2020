@@ -5,17 +5,18 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Server.Model
 {
     public class ServerModel
     {
-        public event Action<string> OnStarted;
-        public event Action<string> OnClientGetsMessage;
-        public event Action<string> OnException;
+        public event Action<string> ?OnStarted;
+        public event Action<string> ?OnClientGetsMessage;
+        public event Action<string> ?OnException;
 
 
-        static TcpListener tcpListener;
+        static TcpListener ?tcpListener;
         Dictionary<string, ClientModel> clients = new Dictionary<string, ClientModel>();
 
         protected internal void AddConnection(ClientModel clientModel)
@@ -47,8 +48,8 @@ namespace Server.Model
 
                     ClientModel clientModel = new ClientModel(tcpClient, this);
                     clientModel.OnGetMessage += ClientGetsMessage;
-                    Thread clientThread = new Thread(new ThreadStart(clientModel.Process));
-                    clientThread.Start();
+                    var clientTask = Task.Factory.StartNew(clientModel.Process);
+                    clientTask.Wait();
                 }
             }
             catch (Exception ex)

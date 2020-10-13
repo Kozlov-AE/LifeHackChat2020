@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ConsoleClient
 {
@@ -24,8 +25,8 @@ namespace ConsoleClient
                 stream = client.GetStream();
 
                 // запускаем новый поток для получения данных
-                Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
-                receiveThread.Start(); //старт потока
+                var receiveTask = Task.Factory.StartNew(ReceiveMessage);
+                receiveTask.Wait();
                 SendMessage();
             }
             catch (Exception ex)
@@ -82,11 +83,9 @@ namespace ConsoleClient
 
         static void Disconnect()
         {
-            if (stream != null)
-                stream.Close();//отключение потока
-            if (client != null)
-                client.Close();//отключение клиента
-            Environment.Exit(0); //завершение процесса
+            stream?.Close(); //Отключение потока
+            client?.Close(); //Отключение клиента
+            Environment.Exit(0); //Завершение процесса
         }
     }
 }
