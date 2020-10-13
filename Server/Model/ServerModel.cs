@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Server.Mediator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Server.Model
 {
-    public class ServerModel
+    public class ServerModel: IDisposable
     {
         public event Action<string> ?OnStarted;
         public event Action<string> ?OnClientGetsMessage;
@@ -17,22 +18,14 @@ namespace Server.Model
 
 
         static TcpListener ?tcpListener;
-        Dictionary<string, ClientModel> clients = new Dictionary<string, ClientModel>();
 
-        protected internal void AddConnection(ClientModel clientModel)
+        public IConnectionStorage ?connections;
+
+        public ServerModel (IConnectionStorage connections)
         {
-            clients.Add(clientModel.Id, clientModel);
+            this.connections = connections;
         }
-
-        protected internal void RemoveConnection(string id)
-        {
-            ClientModel client = clients[id];
-            if (client != null)
-                clients.Remove(id);
-        }
-
-        // прослушивание входящих подключений
-        protected internal void Listen()
+        public void Listen()
         {
             try
             {
@@ -69,33 +62,36 @@ namespace Server.Model
         }
 
         // трансляция сообщения всем подключенным клиентам, кроме отправителя.
-        protected internal void BroadcastMessage(string message, string id)
+        public void BroadcastMessage(string message, string id)
         {
             byte[] data = Encoding.Unicode.GetBytes(message);
-            foreach (var c in clients)
+            foreach (var c in connections.GetAllExceptId(id))
             {
-                if (c.Key != id) c.Value.Stream.Write(data, 0, data.Length);
+                c.Stream.Write(data, 0, data.Length);
             }
         }
 
         /// <summary>Отправить одно текстовое сообщение одному клиенту</summary>
         /// <param name="message">Текст сообщения</param>
         /// <param name="id"><see langword="Id"/> клиента получателя</param>
-        protected internal void SendMessage (string message, string id)
+        public void SendMessage (string message, string id)
         {
             byte[] data = Encoding.Unicode.GetBytes(message);
-            clients[id].Stream.Write(data, 0, data.Length);
+            connections[id].Stream.Write(data, 0, data.Length);
         }
 
-        // отключение всех клиентов
-        protected internal void Disconnect()
+        // Удалить!
+        public void Disconnect()
         {
             tcpListener.Stop();
-            foreach (var c in clients)
-            {
-                c.Value.Close();
-                RemoveConnection(c.Key);
-            }
+            connections.CloseAndRemoveAll();
+            Environment.Exit(0);
+        }
+
+        public void Dispose()
+        {
+            tcpListener.Stop();
+            connections.CloseAndRemoveAll();
             Environment.Exit(0);
         }
     }

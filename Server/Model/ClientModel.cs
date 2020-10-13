@@ -8,12 +8,12 @@ namespace Server.Model
 {
     public class ClientModel
     {
-        public event Action<string> OnConnected;
-        public event Action<object, string> OnGetMessage;
+        public event Action<string> ?OnConnected;
+        public event Action<object, string> ?OnGetMessage;
 
         public string Id { get; private set; }
-        public NetworkStream Stream { get; private set; }
-        public string UserName { get; private set; }
+        public NetworkStream ?Stream { get; private set; }
+        public string ?UserName { get; private set; }
         TcpClient client;
         ServerModel server;
 
@@ -22,7 +22,7 @@ namespace Server.Model
             Id = Guid.NewGuid().ToString();
             client = tcpClient;
             server = serverModel;
-            serverModel.AddConnection(this);
+            serverModel.connections.AddConnection(this);
         }
 
         public void Process()
@@ -61,7 +61,7 @@ namespace Server.Model
             finally
             {
                 // в случае выхода из цикла закрываем ресурсы
-                server.RemoveConnection(this.Id);
+                server.connections.CloseAndRemoveAll();
                 Close();
             }
         }
@@ -85,10 +85,8 @@ namespace Server.Model
         // закрытие подключения
         protected internal void Close()
         {
-            if (Stream != null)
-                Stream.Close();
-            if (client != null)
-                client.Close();
+                Stream?.Close();
+                client?.Close();
         }
     }
 }

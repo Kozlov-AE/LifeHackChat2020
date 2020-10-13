@@ -8,11 +8,11 @@ namespace ConsoleClient
 {
     class Program
     {
-        static string userName;
-        private const string host = "127.0.0.1";
+        static string ?userName;
+        private const string ?host = "127.0.0.1";
         private const int port = 8888;
-        static TcpClient client;
-        static NetworkStream stream;
+        static TcpClient ?client;
+        static NetworkStream ?stream;
 
         static void Main(string[] args)
         {
@@ -26,7 +26,6 @@ namespace ConsoleClient
 
                 // запускаем новый поток для получения данных
                 var receiveTask = Task.Factory.StartNew(ReceiveMessage);
-                receiveTask.Wait();
                 SendMessage();
             }
             catch (Exception ex)
