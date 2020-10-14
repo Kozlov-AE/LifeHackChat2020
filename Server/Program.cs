@@ -36,6 +36,7 @@ namespace Server
         static private void MessageProcessing (ClientMessageHandler handler)
         {
             server.SendMessageToClient("Введите сообщение:", handler.ClientId);
+            DialogHandler.DialogHandler.GetAnswer
         }
     }
 }

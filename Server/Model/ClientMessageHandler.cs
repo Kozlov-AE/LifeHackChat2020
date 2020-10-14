@@ -10,6 +10,7 @@ namespace Server.Model
         public string? ClientId { get;}
         public string? Name { get; }
         public string? Message { get;}
+        public ClientGroups Group { get; }
 
         public ClientMessageHandler(string id, string name, string message)
         {

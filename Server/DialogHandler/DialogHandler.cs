@@ -4,7 +4,11 @@ using System.Text;
 
 namespace Server.DialogHandler
 {
-    class DialogHandler
+    public class DialogHandler
     {
+        static public string GetAnswer()
+        {
+            return "ddd";
+        }
     }
 }

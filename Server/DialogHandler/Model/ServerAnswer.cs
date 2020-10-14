@@ -4,10 +4,26 @@ using System.Text;
 
 namespace Server.DialogHandler.Model
 {
-    class ServerAnswer
+    public class ServerAnswer
     {
-        public Guid Id { get; private set; }
-        public Guid ClientRequestId { get; set; }
+        //Для разнообразия
+        static int globalId;
+        static ServerAnswer()
+        {
+            globalId = 1;
+        }
+
+        public int Id { get; private set; }
+        public int ClientRequestId { get; set; }
         public string? Text { get; set; }
+
+        public ServerAnswer(int requestId, string answer)
+        {
+            Id = NexId();
+            ClientRequestId = requestId;
+            Text = answer;
+        }
+
+        static int NexId() => ++globalId;
     }
 }
