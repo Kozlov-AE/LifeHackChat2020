@@ -42,7 +42,7 @@ namespace Server.Model
 
                     ClientModel.OnCreated += connections.AddConnection;
                     ClientModel.OnCreated += OnClientCreated;
-                    ClientModel clientModel = new ClientModel(tcpClient, this);
+                    ClientModel clientModel = new ClientModel(tcpClient);
                     clientModel.OnConnected += OnClientConnected;
                     clientModel.OnGetMessage += OnClientGetsMessage;
                     clientModel.OnDisconected += OnClientDisconected;
@@ -80,15 +80,21 @@ namespace Server.Model
         // Удалить!
         public void Disconnect()
         {
+            //Перестаем слушать порт
             tcpListener.Stop();
+            //Удаляем все подключения
             connections.CloseAndRemoveAll();
+            //Закрываем приложение (в core нужно нажать энтер)
             Environment.Exit(0);
         }
 
         public void Dispose()
         {
+            //Перестаем слушать порт
             tcpListener.Stop();
+            //Удаляем все подключения
             connections.CloseAndRemoveAll();
+            //Закрываем приложение (в core нужно нажать энтер)
             Environment.Exit(0);
         }
     }

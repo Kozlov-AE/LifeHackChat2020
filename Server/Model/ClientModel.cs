@@ -16,19 +16,18 @@ namespace Server.Model
 
         public string? Id { get; private set; }
         public NetworkStream ?Stream { get; private set; }
-        public string ?UserName { get; private set; }
+        public string? UserName { get; private set; }
         TcpClient client;
-        LifeChatServer server;
 
-        public ClientModel(TcpClient tcpClient, LifeChatServer server)
+        // Создаем новое подключение к клиентскому приложению
+        public ClientModel(TcpClient tcpClient)
         {
             Id = Guid.NewGuid().ToString();
             client = tcpClient;
-            this.server = server;
             OnCreated?.Invoke(this);
-            //server.connections.AddConnection(this);
         }
 
+        /// <summary>Начинаем слушать порт на предмет новых сообщений для клиента, в новом потоке</summary>
         public void Process()
         {
             try
@@ -42,7 +41,8 @@ namespace Server.Model
 
                 // Событие подключения клиента к чату
                 OnConnected?.Invoke(new ClientDataHandler(this));
-                // в бесконечном цикле получаем сообщения от клиента
+
+                // В бесконечном цикле получаем сообщения от клиента
                 while (true)
                 {
                     try
@@ -63,14 +63,13 @@ namespace Server.Model
             }
             finally
             {
-                // в случае выхода из цикла закрываем ресурсы
-                //server.connections.RemoveConnection(Id);
                 OnDisconected?.Invoke(new ClientDataHandler(this));
                 Close();
             }
         }
 
-        // чтение входящего сообщения и преобразование в строку
+        /// <summary>Чтение входящего сообщения и преобразование его в строку</summary>
+        /// <returns>Строку с текстовым сообщением</returns>
         private string GetMessage()
         {
             byte[] data = new byte[64]; // буфер для получаемых данных
