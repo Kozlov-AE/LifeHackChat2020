@@ -34,6 +34,7 @@ namespace Server.Model
             try
             {
                 Stream = client.GetStream();
+
                 // Запрос имени пользователя
                 SendMessage("Введите ваше имя");
                 string message = GetMessage();

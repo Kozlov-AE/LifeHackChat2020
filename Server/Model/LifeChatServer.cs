@@ -17,6 +17,7 @@ namespace Server.Model
         public event Action<ClientMessageHandler>? OnClientGetsMessage;
         public event Action<ClientDataHandler>? OnClientDisconected;
         public event Action<ClientDataHandler>? OnClientConnected;
+        public event Action<ClientModel>? OnClientCreated;
 
         static TcpListener? tcpListener;
 
@@ -40,6 +41,7 @@ namespace Server.Model
                     TcpClient tcpClient = tcpListener.AcceptTcpClient();
 
                     ClientModel.OnCreated += connections.AddConnection;
+                    ClientModel.OnCreated += OnClientCreated;
                     ClientModel clientModel = new ClientModel(tcpClient, this);
                     clientModel.OnConnected += OnClientConnected;
                     clientModel.OnGetMessage += OnClientGetsMessage;

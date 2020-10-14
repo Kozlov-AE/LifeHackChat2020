@@ -42,8 +42,6 @@ namespace ConsoleClient
         // отправка сообщений
         static void SendMessage()
         {
-            Console.WriteLine("Введите сообщение: ");
-
             while (true)
             {
                 string message = Console.ReadLine();

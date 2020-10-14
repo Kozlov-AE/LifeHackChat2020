@@ -17,9 +17,10 @@ namespace Server
             {
                 server = new LifeChatServer(new ConnectionStorageService());
                 server.OnStarted += Console.WriteLine;
+                server.OnClientCreated += (c) => Console.WriteLine($"Подключился новый клиент с Id \"{c?.Id}\"");
                 server.OnClientGetsMessage += Console.WriteLine;
                 server.OnClientGetsMessage += MessageProcessing;
-                server.OnClientConnected += (c) => Console.WriteLine($"Подключился клиент с именем {c.UserName}");
+                server.OnClientConnected += (c) => Console.WriteLine($"Клиент с Id {c.Id} указал свое имя \"{c.UserName}\"");
                 server.OnClientDisconected += (c) => Console.WriteLine($"Клиент {c.UserName} отключился от сервера");
                 server.OnException += Console.WriteLine;
                 serverTask = Task.Factory.StartNew(server.Listen);
@@ -34,7 +35,7 @@ namespace Server
 
         static private void MessageProcessing (ClientMessageHandler handler)
         {
-
+            server.SendMessageToClient("Введите сообщение:", handler.ClientId);
         }
     }
 }
