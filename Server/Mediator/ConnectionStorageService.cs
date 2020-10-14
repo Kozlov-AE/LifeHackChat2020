@@ -8,7 +8,7 @@ namespace Server.Mediator
 {
     public class ConnectionStorageService : IConnectionStorage
     {
-        readonly Dictionary<string, ClientModel>? clients = new Dictionary<string, ClientModel>();
+        readonly Dictionary<string, ClientModel> clients = new Dictionary<string, ClientModel>();
 
         public ClientModel this[string id]
         {

@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace Server.Model
 {
-    public class ServerModel: IDisposable
+    public class LifeChatServer: IDisposable
     {
-        public event Action<string> ?OnStarted;
-        public event Action<string> ?OnClientGetsMessage;
-        public event Action<string> ?OnException;
+        public event Action<string>? OnStarted;
+        public event Action<string>? OnException;
+        public event Action<ClientMessageHandler>? OnClientGetsMessage;
+        public event Action<string>? OnClientDisconected;
 
+        static TcpListener? tcpListener;
 
-        static TcpListener ?tcpListener;
+        public IConnectionStorage? connections;
 
-        public IConnectionStorage ?connections;
-
-        public ServerModel (IConnectionStorage connections)
+        public LifeChatServer (IConnectionStorage connections)
         {
             this.connections = connections;
         }
@@ -32,7 +32,6 @@ namespace Server.Model
                 tcpListener = new TcpListener(IPAddress.Any, 8888);
                 tcpListener.Start();
 
-                //Console.WriteLine("Сервер запущен. Ожидание подключений...");
                 OnStarted?.Invoke("Сервер запущен, ожидание подключений...");
 
                 while (true)
@@ -55,10 +54,9 @@ namespace Server.Model
         /// <summary>Получение клиентом сообщения</summary>
         /// <param name="sender">Отправитель</param>
         /// <param name="message">Сообщение</param>
-        private void ClientGetsMessage(object sender, string message)
+        private void ClientGetsMessage(ClientMessageHandler handler)
         {
-            string finalmessage = string.Concat($"Клиент {(sender as ClientModel).UserName}: {message}");
-            OnClientGetsMessage?.Invoke(finalmessage);
+            OnClientGetsMessage?.Invoke(handler);
         }
 
         // трансляция сообщения всем подключенным клиентам, кроме отправителя.
@@ -74,10 +72,9 @@ namespace Server.Model
         /// <summary>Отправить одно текстовое сообщение одному клиенту</summary>
         /// <param name="message">Текст сообщения</param>
         /// <param name="id"><see langword="Id"/> клиента получателя</param>
-        public void SendMessage (string message, string id)
+        public void SendMessageToClient (string message, string id)
         {
-            byte[] data = Encoding.Unicode.GetBytes(message);
-            connections[id].Stream.Write(data, 0, data.Length);
+            connections[id].SendMessage(message);
         }
 
         // Удалить!

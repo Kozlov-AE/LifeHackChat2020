@@ -9,15 +9,16 @@ namespace Server
 {
     class Program
     {
-        static ServerModel ?server;
-        static Task ?serverTask;
+        static LifeChatServer? server;
+        static Task? serverTask;
         static void Main(string[] args)
         {
             try
             {
-                server = new ServerModel(new ConnectionStorageService());
+                server = new LifeChatServer(new ConnectionStorageService());
                 server.OnStarted += Console.WriteLine;
                 server.OnClientGetsMessage += Console.WriteLine;
+                server.OnClientGetsMessage += MessageProcessing;
                 server.OnException += Console.WriteLine;
                 serverTask = Task.Factory.StartNew(server.Listen);
                 serverTask.Wait();
@@ -27,6 +28,11 @@ namespace Server
                 server.Disconnect();
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        static private void MessageProcessing (ClientMessageHandler handler)
+        {
+
         }
     }
 }

@@ -8,16 +8,18 @@ namespace Server.Model
 {
     public class ClientModel
     {
-        public event Action<string> ?OnConnected;
-        public event Action<object, string> ?OnGetMessage;
+        public event Action<string>? OnDisconected;
+        public event Action<string>? OnConnected;
+        public event Action<ClientMessageHandler>? OnGetMessage;
+        public event Action<string>? OnException;
 
         public string Id { get; private set; }
         public NetworkStream ?Stream { get; private set; }
         public string ?UserName { get; private set; }
         TcpClient client;
-        ServerModel server;
+        LifeChatServer server;
 
-        public ClientModel(TcpClient tcpClient, ServerModel serverModel)
+        public ClientModel(TcpClient tcpClient, LifeChatServer serverModel)
         {
             Id = Guid.NewGuid().ToString();
             client = tcpClient;
@@ -31,7 +33,7 @@ namespace Server.Model
             {
                 Stream = client.GetStream();
                 // Запрос имени пользователя
-                server.SendMessage("Введите ваше имя", Id);
+                SendMessage("Введите ваше имя");
                 string message = GetMessage();
                 UserName = message;
 
@@ -43,25 +45,23 @@ namespace Server.Model
                     try
                     {
                         message = GetMessage();
-                        OnGetMessage(this, message);
+                        OnGetMessage?.Invoke(new ClientMessageHandler(Id, UserName, message));
                     }
                     catch
                     {
-                        message = String.Format("{0}: покинул чат", UserName);
-                        Console.WriteLine(message);
-                        server.BroadcastMessage(message, this.Id);
+                        OnDisconected?.Invoke($"{UserName}: покинул чат");
                         break;
                     }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                OnException?.Invoke(e.Message);
             }
             finally
             {
                 // в случае выхода из цикла закрываем ресурсы
-                server.connections.CloseAndRemoveAll();
+                server.connections.RemoveConnection(Id);
                 Close();
             }
         }
@@ -82,8 +82,16 @@ namespace Server.Model
             return builder.ToString();
         }
 
+        /// <summary>Отправить одно текстовое сообщение этому клиенту</summary>
+        /// <param name="message">Текст сообщения</param>
+        public void SendMessage(string message)
+        {
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            Stream.Write(data, 0, data.Length);
+        }
+
         // закрытие подключения
-        protected internal void Close()
+        public void void Close()
         {
                 Stream?.Close();
                 client?.Close();
