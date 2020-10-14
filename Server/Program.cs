@@ -19,6 +19,8 @@ namespace Server
                 server.OnStarted += Console.WriteLine;
                 server.OnClientGetsMessage += Console.WriteLine;
                 server.OnClientGetsMessage += MessageProcessing;
+                server.OnClientConnected += (c) => Console.WriteLine($"Подключился клиент с именем {c.UserName}");
+                server.OnClientDisconected += (c) => Console.WriteLine($"Клиент {c.UserName} отключился от сервера");
                 server.OnException += Console.WriteLine;
                 serverTask = Task.Factory.StartNew(server.Listen);
                 serverTask.Wait();

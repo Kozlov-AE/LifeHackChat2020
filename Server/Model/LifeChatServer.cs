@@ -15,7 +15,8 @@ namespace Server.Model
         public event Action<string>? OnStarted;
         public event Action<string>? OnException;
         public event Action<ClientMessageHandler>? OnClientGetsMessage;
-        public event Action<string>? OnClientDisconected;
+        public event Action<ClientDataHandler>? OnClientDisconected;
+        public event Action<ClientDataHandler>? OnClientConnected;
 
         static TcpListener? tcpListener;
 
@@ -38,25 +39,22 @@ namespace Server.Model
                 {
                     TcpClient tcpClient = tcpListener.AcceptTcpClient();
 
+                    ClientModel.OnCreated += connections.AddConnection;
                     ClientModel clientModel = new ClientModel(tcpClient, this);
-                    clientModel.OnGetMessage += ClientGetsMessage;
+                    clientModel.OnConnected += OnClientConnected;
+                    clientModel.OnGetMessage += OnClientGetsMessage;
+                    clientModel.OnDisconected += OnClientDisconected;
+                    clientModel.OnDisconected += (c) => connections.RemoveConnection(c.Id);
                     var clientTask = Task.Factory.StartNew(clientModel.Process);
                     clientTask.Wait();
                 }
             }
+
             catch (Exception ex)
             {
                 OnException?.Invoke(ex.Message);
                 Disconnect();
             }
-        }
-
-        /// <summary>Получение клиентом сообщения</summary>
-        /// <param name="sender">Отправитель</param>
-        /// <param name="message">Сообщение</param>
-        private void ClientGetsMessage(ClientMessageHandler handler)
-        {
-            OnClientGetsMessage?.Invoke(handler);
         }
 
         // трансляция сообщения всем подключенным клиентам, кроме отправителя.

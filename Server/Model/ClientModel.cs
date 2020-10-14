@@ -8,23 +8,25 @@ namespace Server.Model
 {
     public class ClientModel
     {
-        public event Action<string>? OnDisconected;
-        public event Action<string>? OnConnected;
+        static public event Action<ClientModel>? OnCreated;
+        public event Action<ClientDataHandler>? OnDisconected;
+        public event Action<ClientDataHandler>? OnConnected;
         public event Action<ClientMessageHandler>? OnGetMessage;
         public event Action<string>? OnException;
 
-        public string Id { get; private set; }
+        public string? Id { get; private set; }
         public NetworkStream ?Stream { get; private set; }
         public string ?UserName { get; private set; }
         TcpClient client;
         LifeChatServer server;
 
-        public ClientModel(TcpClient tcpClient, LifeChatServer serverModel)
+        public ClientModel(TcpClient tcpClient, LifeChatServer server)
         {
             Id = Guid.NewGuid().ToString();
             client = tcpClient;
-            server = serverModel;
-            serverModel.connections.AddConnection(this);
+            this.server = server;
+            OnCreated?.Invoke(this);
+            //server.connections.AddConnection(this);
         }
 
         public void Process()
@@ -38,7 +40,7 @@ namespace Server.Model
                 UserName = message;
 
                 // Событие подключения клиента к чату
-                OnConnected?.Invoke($"Клиент с именем \"{UserName}\" подключился к чату");
+                OnConnected?.Invoke(new ClientDataHandler(this));
                 // в бесконечном цикле получаем сообщения от клиента
                 while (true)
                 {
@@ -49,7 +51,7 @@ namespace Server.Model
                     }
                     catch
                     {
-                        OnDisconected?.Invoke($"{UserName}: покинул чат");
+                        OnDisconected?.Invoke(new ClientDataHandler(this));
                         break;
                     }
                 }
@@ -61,7 +63,8 @@ namespace Server.Model
             finally
             {
                 // в случае выхода из цикла закрываем ресурсы
-                server.connections.RemoveConnection(Id);
+                //server.connections.RemoveConnection(Id);
+                OnDisconected?.Invoke(new ClientDataHandler(this));
                 Close();
             }
         }
@@ -91,7 +94,7 @@ namespace Server.Model
         }
 
         // закрытие подключения
-        public void void Close()
+        public void Close()
         {
                 Stream?.Close();
                 client?.Close();
