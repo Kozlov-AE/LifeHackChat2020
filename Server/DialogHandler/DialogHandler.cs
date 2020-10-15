@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Server.DialogHandler
 {
     public class DialogHandler : IDialogHandler
     {
-        IDialogStorage dialogStorage;
+        protected IDialogStorage dialogStorage;
 
         public DialogHandler(IDialogStorage dialogStorage)
         {
@@ -22,23 +23,14 @@ namespace Server.DialogHandler
 
         public string? GetAnswer(string message)
         {
-            //return dialogStorage.GetAllRequests()
-            //    .FirstOrDefault(r => r.Text.ToLower() == message.ToLower())
-            //    ?.GetRandomAnswer().Text
-            //    ?? null;
-            string result = "";
-            if (dialogStorage.GetAllRequests()
-                .FirstOrDefault(r => r.Text.ToLower() == message.ToLower())
-                is ClientRequest req)
-            {
-                if (req.GetRandomAnswer() is ServerAnswer sa)
-                {
-                    result = sa.Text;
-                }
-                else result = null;
-            }
-            else result = null;
-            return result;
+            return dialogStorage.GetAllRequests()
+                ?.FirstOrDefault(r => r.Text.ToLower() == message.ToLower())
+                ?.GetRandomAnswer()?.Text ?? null;
+        }
+
+        public async Task LoadData()
+        {
+            await dialogStorage.LoadBase();
         }
     }
 }

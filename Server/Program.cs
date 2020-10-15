@@ -1,4 +1,5 @@
 ﻿using Server.DialogHandler;
+using Server.DialogHandler.Model;
 using Server.Mediator;
 using Server.Model;
 using System;
@@ -13,12 +14,13 @@ namespace Server
     {
         static LifeChatServer? server;
         static Task? serverTask;
-        static IDialogHandler dialogHandler = new DialogHandler.DialogHandler();
+        static IDialogHandler dialogHandler = new DialogHandler.DialogHandler(new MemoryDialogStorage());
 
         static void Main(string[] args)
         {
             try
             {
+                dialogHandler.LoadData();
                 server = new LifeChatServer(new ConnectionStorageService());
                 server.OnStarted += Console.WriteLine;
                 server.OnClientCreated += (c) => Console.WriteLine($"Подключился новый клиент с Id \"{c?.Id}\"");

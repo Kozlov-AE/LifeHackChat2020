@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Server.DialogHandler.Model
 {
@@ -20,5 +21,11 @@ namespace Server.DialogHandler.Model
         /// <summary>Получить коллекцию всех вопросов</summary>
         /// <returns><see cref="IReadOnlyCollection<ClientRequest>"/> Вопросов</returns>
         public IReadOnlyCollection<ClientRequest> GetAllRequests();
+
+        /// <summary>Зафиксировать содержимое хранилища</summary>
+        public Task SaveBase();
+
+        /// <summary>Загрузить базу из хранилища</summary>
+        public Task LoadBase();
     }
 }

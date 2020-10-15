@@ -31,7 +31,7 @@ namespace Server.DialogHandler.Model
         /// <summary>Получить случайный ответ (если их несколько)</summary>
         /// <returns><see cref="ServerAnswer"/> или <see langword="null"/>, если ответов нет</returns>
         public ServerAnswer? GetRandomAnswer() 
-            => answers.Count > 0 ? answers.ElementAt(new Random().Next(1, answers.Count)) : null; 
+            => answers.Count > 0 ? answers.ElementAt(new Random().Next(0, answers.Count)) : null; 
 
     }
 }
