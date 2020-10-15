@@ -7,19 +7,16 @@ namespace Server.Model
     public class ClientMessageHandler
     {
         public DateTime Time { get;}
-        public string? ClientId { get;}
-        public string? Name { get; }
         public string? Message { get;}
-        public ClientGroups Group { get; }
+        public ClientModel? Client { get; }
 
-        public ClientMessageHandler(string id, string name, string message)
+        public ClientMessageHandler(string? message, ClientModel? client)
         {
             Time = DateTime.Now;
-            Name = name;
-            ClientId = id;
+            Client = client;
             Message = message;
         }
 
-        public override string ToString() => $"{Time.ToShortTimeString()} {Name}: {Message}";
+        public override string ToString() => $"{Time.ToShortTimeString()} {Client.UserName}: {Message}";
     }
 }

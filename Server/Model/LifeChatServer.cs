@@ -43,7 +43,7 @@ namespace Server.Model
                     ClientModel.OnCreated += connections.AddConnection;
                     ClientModel.OnCreated += OnClientCreated;
                     ClientModel clientModel = new ClientModel(tcpClient);
-                    clientModel.OnConnected += OnClientConnected;
+                    clientModel.OnConnected += CheckConnectionName;
                     clientModel.OnGetMessage += OnClientGetsMessage;
                     clientModel.OnDisconected += OnClientDisconected;
                     clientModel.OnDisconected += (c) => connections.RemoveConnection(c.Id);
@@ -77,6 +77,26 @@ namespace Server.Model
             connections[id].SendMessage(message);
         }
 
+        /// <summary>Если соединение с таким именем есть, то убиваем его.</summary>
+        public void CheckConnectionName(ClientDataHandler handler)
+        {
+            var c = connections.FirstOrDefault(c => c.UserName == handler.UserName && c.Id != handler.Id);
+            if (c != null)
+            {
+                OnException?.Invoke($"Клиент с именем {handler.UserName} уже подключен. Убиваем нового!");
+                SendMessageToClient("Клиент с таким именем уже подключен. Переподключитесь с другим именем!", handler.Id);
+                connections[handler.Id].Close();
+                connections.RemoveConnection(handler.Id);
+            }
+            else
+            {
+                var message = handler.Group == ClientGroups.admin ?
+                "Вы админ! Для получения списка команд, введите \" /help\", для выхода введите \"/Пока (да да, по русски)\"" :
+                "Вы юзер! Для получения списка команд, введите \" /help\", для выхода введите \"/Пока (да да, по русски)\"";
+                SendMessageToClient(message, handler.Id);
+                OnClientConnected?.Invoke(handler);
+            }
+        }
         // Удалить!
         public void Disconnect()
         {

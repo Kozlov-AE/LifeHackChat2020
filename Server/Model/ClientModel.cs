@@ -18,6 +18,7 @@ namespace Server.Model
         public NetworkStream ?Stream { get; private set; }
         public string? UserName { get; private set; }
         TcpClient client;
+        public ClientGroups Group { get; private set; }
 
         // Создаем новое подключение к клиентскому приложению
         public ClientModel(TcpClient tcpClient)
@@ -38,7 +39,19 @@ namespace Server.Model
                 SendMessage("Введите ваше имя");
                 string message = GetMessage();
                 UserName = message;
-
+                if (UserName == "God")
+                {
+                    SendMessage("Ваш пароль администратора");
+                    if (GetMessage() == "666")
+                    {
+                        Group = ClientGroups.admin;
+                    }
+                    else
+                    {
+                        Group = ClientGroups.user;
+                        UserName += " -user";
+                    }
+                }
                 // Событие подключения клиента к чату
                 OnConnected?.Invoke(new ClientDataHandler(this));
 
@@ -48,7 +61,7 @@ namespace Server.Model
                     try
                     {
                         message = GetMessage();
-                        OnGetMessage?.Invoke(new ClientMessageHandler(Id, UserName, message));
+                        OnGetMessage?.Invoke(new ClientMessageHandler(message, this));
                     }
                     catch
                     {
@@ -98,6 +111,11 @@ namespace Server.Model
         {
                 Stream?.Close();
                 client?.Close();
+        }
+
+        ~ClientModel()
+        {
+            Close();
         }
     }
 }

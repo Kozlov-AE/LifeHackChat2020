@@ -41,5 +41,10 @@ namespace Server.Mediator
         {
             clients.Remove(id);
         }
+
+        public ClientModel FirstOrDefault(Func<ClientModel, bool> predicate)
+        {
+            return clients.Values.FirstOrDefault(predicate);
+        }
     }
 }

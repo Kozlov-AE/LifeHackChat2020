@@ -1,4 +1,5 @@
 ﻿using Server.Model;
+using System;
 using System.Collections.Generic;
 
 namespace Server.Mediator
@@ -18,5 +19,8 @@ namespace Server.Mediator
         public void CloseAndRemoveAll();
         /// <summary>Получить соединение по id</summary>
         public ClientModel this[string id] { get; }
+        /// <summary>Получить первый найденный элемент или <see langword="null"/> по условию</summary>
+        /// <param name="predicate">Условная конструкция для поиска</param>
+        public ClientModel FirstOrDefault(Func<ClientModel, bool> predicate);
     }
 }
