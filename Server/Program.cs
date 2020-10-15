@@ -1,6 +1,8 @@
-﻿using Server.Mediator;
+﻿using Server.DialogHandler;
+using Server.Mediator;
 using Server.Model;
 using System;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +13,8 @@ namespace Server
     {
         static LifeChatServer? server;
         static Task? serverTask;
+        static IDialogHandler dialogHandler = new DialogHandler.DialogHandler();
+
         static void Main(string[] args)
         {
             try
@@ -33,10 +37,20 @@ namespace Server
             }
         }
 
-        static private void MessageProcessing (ClientMessageHandler handler)
+        private static void MessageProcessing (ClientMessageHandler handler)
         {
-            server.SendMessageToClient("Введите сообщение:", handler.Client.Id);
-            DialogHandler.DialogHandler.GetAnswer();
+            const string insertMessage = "\n Введите сообщение";
+            const string noAnswer = "Я не знаю ответ, давайте попробуем еще раз.";
+
+            if (dialogHandler.GetAnswer(handler.Message) is string answer)
+            {
+                answer.Concat(insertMessage);
+            }
+            else
+            {
+                answer = noAnswer;
+            }
+            server.SendMessageToClient(answer, handler.Client.Id);
         }
     }
 }

@@ -13,6 +13,12 @@ namespace Server.DialogHandler.Model
             globalId = 1;
         }
 
+        public ClientRequest(string? text, List<ServerAnswer> answers)
+        {
+            Text = text;
+            this.answers = answers;
+        }
+
         public int Id { get; private set; }
         public string? Text { get; set; }
         readonly List<ServerAnswer> answers = new List<ServerAnswer>();

@@ -5,32 +5,45 @@ using System.Text;
 
 namespace Server.DialogHandler.Model
 {
-    class DialogStorage : IDialogStorage
+    public class DialogStorage : IDialogStorage
     {
         readonly List<ClientRequest> requests = new List<ClientRequest>();
 
-        /// <summary>Добавить запрос пользователя в базу</summary>
-        /// <param name="request">Запрос</param>
+        public DialogStorage(string PathToBase)
+        {
+            this.requests = requests;
+        }
+
+        public DialogStorage()
+        {
+            ClientRequest r1 = new ClientRequest("Привет", new List<ServerAnswer>());
+            r1.AddAnswer("Здравствуйте.");
+            r1.AddAnswer("Привет!");
+            r1.AddAnswer("Доброе время суток)");
+            requests.Add(r1);
+            ClientRequest r2 = new ClientRequest("Как дела?", new List<ServerAnswer>());
+            r2.AddAnswer("Отлично.");
+            r2.AddAnswer("Не жалуюсь)");
+            r2.AddAnswer("Получше ваших будут))");
+            requests.Add(r2);
+            ClientRequest r3 = new ClientRequest("куку", new List<ServerAnswer>());
+            requests.Add(r3);
+        }
+
         public void AddRequest(ClientRequest request)
         {
             requests.Add(request);
         }
 
-        /// <summary>Удалить запрос пользователя из базы</summary>
-        /// <param name="id">Id запроса</param>
         public void RemoveRequest(int id)
         {
             var req = this[id];
-            if (req != null) requests.Remove(req);
+            if (req != null)
+                requests.Remove(req);
         }
 
-        /// <summary>Получить объект по Id</summary>
-        /// <param name="id">Id объекта</param>
-        /// <returns><see cref="ClientRequest"/> или <see langword="null"/> если не id найден</returns>
         public ClientRequest this[int id] => requests.FirstOrDefault(r => r.Id == id);
 
-        /// <summary>Получить коллекцию всех вопросов</summary>
-        /// <returns><see cref="IReadOnlyCollection<ClientRequest>"/> Вопросов</returns>
         public IReadOnlyCollection<ClientRequest> GetAllRequests() => requests;
     }
 }
