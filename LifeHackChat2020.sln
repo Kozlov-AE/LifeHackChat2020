@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{C6E8C1AD-1A87-4503-93FF-3E7B574F8FF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeHackChat2020_WinClient", "LifeHackChat2020_WinClient\LifeHackChat2020_WinClient.csproj", "{230BA5EF-8DEC-44DF-927F-2FE7FFD7F383}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeHackChat2020_WinClient", "LifeHackChat2020_WinClient\LifeHackChat2020_WinClient.csproj", "{230BA5EF-8DEC-44DF-927F-2FE7FFD7F383}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeHackChat2020_Console", "LifeHackChat2020_Console\LifeHackChat2020_Console.csproj", "{D7F766CC-B074-4D75-9327-B821F17ED5C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{230BA5EF-8DEC-44DF-927F-2FE7FFD7F383}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{230BA5EF-8DEC-44DF-927F-2FE7FFD7F383}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{230BA5EF-8DEC-44DF-927F-2FE7FFD7F383}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7F766CC-B074-4D75-9327-B821F17ED5C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7F766CC-B074-4D75-9327-B821F17ED5C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7F766CC-B074-4D75-9327-B821F17ED5C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7F766CC-B074-4D75-9327-B821F17ED5C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,7 +20,7 @@ namespace Server
         {
             try
             {
-                dialogHandler.LoadData();
+                dialogHandler.LoadData().Wait();
                 server = new LifeChatServer(new ConnectionStorageService());
                 server.OnStarted += Console.WriteLine;
                 server.OnClientCreated += (c) => Console.WriteLine($"Подключился новый клиент с Id \"{c?.Id}\"");

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Data.TCPConnection
@@ -9,13 +10,18 @@ namespace Data.TCPConnection
     public class ClientModel : IDisposable
     {
         #region Events
-
+        public event Action<object, MessageHandler> ReceivedMessage;
+        public event Action<object, MessageHandler> SendedMessage;
+        public event Action<object, ExceptionHandler> ExceptionEvent;
+        public event Action Connected;
+        public event Action Disconected;
         #endregion
 
+        public bool IsConnected;
         string host;
         int port;
-        string? userName;
         NetworkStream? stream;
+        static TcpClient? client;
 
         public ClientModel(string host, int port)
         {
@@ -25,9 +31,20 @@ namespace Data.TCPConnection
 
         public void Connect()
         {
-            using (var client = new TcpClient(host,port))
+            client = new TcpClient();
+            while (!client.Connected)
             {
-                stream = client.GetStream();
+                try
+                {
+                    client.Connect(host, port);
+                    stream = client.GetStream();
+                    var receiveTask = Task.Factory.StartNew(ReceiveMessage);
+                }
+                catch (Exception ex)
+                {
+                    ExceptionEvent?.Invoke("Метод подключения", new ExceptionHandler(ex.Message));
+                    Thread.Sleep(1000);
+                }
             }
         }
 
@@ -35,17 +52,16 @@ namespace Data.TCPConnection
         /// <param name="message">Текст сообщения</param>
         public void SendMessage(string message)
         {
-            while (true)
-            {
-                byte[] data = Encoding.Unicode.GetBytes(message);
-                stream.Write(data, 0, data.Length);
-            }
+            SendedMessage?.Invoke("Я", new MessageHandler(message));
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            stream.Write(data, 0, data.Length);
         }
 
-        // получение сообщений
+        /// <summary>Получение сообщений в цикле</summary>
         public void ReceiveMessage()
         {
-            while (true)
+            IsConnected = true;
+            while (IsConnected)
             {
                 try
                 {
@@ -58,10 +74,12 @@ namespace Data.TCPConnection
                         builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
                     }
                     while (stream.DataAvailable);
-                    string message = builder.ToString();
+                    if (builder.Length > 0)
+                        ReceivedMessage?.Invoke("Сервер", new MessageHandler(builder.ToString()));
                 }
-                catch
+                catch (Exception ex)
                 {
+                    ExceptionEvent?.Invoke("Метод получения сообщений", new ExceptionHandler(ex.Message));
                     this.Dispose();
                 }
             }
@@ -69,7 +87,10 @@ namespace Data.TCPConnection
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            stream?.Close(); //Отключение потока
+            client?.Close(); //Отключение клиента
+            IsConnected = false;
+            //Environment.Exit(0); //Завершение процесса
         }
     }
 

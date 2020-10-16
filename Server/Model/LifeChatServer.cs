@@ -27,6 +27,7 @@ namespace Server.Model
         {
             this.connections = connections;
         }
+
         public void Listen()
         {
             try
@@ -43,10 +44,12 @@ namespace Server.Model
                     ClientModel.OnCreated += connections.AddConnection;
                     ClientModel.OnCreated += OnClientCreated;
                     ClientModel clientModel = new ClientModel(tcpClient);
+
                     clientModel.OnConnected += CheckConnectionName;
                     clientModel.OnGetMessage += OnClientGetsMessage;
                     clientModel.OnDisconected += OnClientDisconected;
                     clientModel.OnDisconected += (c) => connections.RemoveConnection(c.Id);
+
                     var clientTask = Task.Factory.StartNew(clientModel.Process);
                     clientTask.Wait();
                 }
@@ -97,6 +100,16 @@ namespace Server.Model
                 OnClientConnected?.Invoke(handler);
             }
         }
+
+        #region Текстовые команды серверу
+        public void GetServerCommand(string command)
+        {
+
+        }
+        #endregion
+
+
+
         // Удалить!
         public void Disconnect()
         {
