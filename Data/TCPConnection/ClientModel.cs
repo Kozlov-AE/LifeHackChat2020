@@ -74,6 +74,7 @@ namespace Data.TCPConnection
                         builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
                     }
                     while (stream.DataAvailable);
+
                     if (builder.Length > 0)
                         ReceivedMessage?.Invoke("Сервер", new MessageHandler(builder.ToString()));
                 }

@@ -37,6 +37,11 @@ namespace Server.Mediator
             return clients.Where(c => c.Key != id).Select(c => c.Value).ToList();
         }
 
+        public IReadOnlyCollection<ClientModel> GetAllClients()
+        {
+            return clients.Values;
+        }
+
         public void RemoveConnection(string id)
         {
             clients.Remove(id);

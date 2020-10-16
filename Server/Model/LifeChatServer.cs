@@ -19,6 +19,9 @@ namespace Server.Model
         public event Action<ClientDataHandler>? OnClientConnected;
         public event Action<ClientModel>? OnClientCreated;
 
+        delegate void UserCommand(object parameter);
+        Dictionary<string, UserCommand> UserCommands;
+
         static TcpListener? tcpListener;
 
         public IConnectionStorage? connections;
@@ -102,12 +105,22 @@ namespace Server.Model
         }
 
         #region Текстовые команды серверу
-        public void GetServerCommand(string command)
+        void CloseUserConnection(string userId)
         {
+            connections[userId].Close();
+            connections.RemoveConnection(userId);
+        }
 
+        void GetClientsList()
+        {
+            StringBuilder sb;
+            foreach (var c in connections.GetAllClients())
+            {
+                sb.Append()
+            }
+            
         }
         #endregion
-
 
 
         // Удалить!
