@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Data.TCPConnection
+namespace Logic.TCPConnection
 {
     public class ClientModel : IDisposable
     {
@@ -91,7 +91,6 @@ namespace Data.TCPConnection
             stream?.Close(); //Отключение потока
             client?.Close(); //Отключение клиента
             IsConnected = false;
-            //Environment.Exit(0); //Завершение процесса
         }
     }
 

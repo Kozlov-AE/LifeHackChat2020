@@ -6,7 +6,7 @@ namespace Server.DialogHandler.Model
 {
     public class ServerAnswer
     {
-        //Для разнообразия
+        //Для разнообразия без GUID
         static int globalId;
         static ServerAnswer()
         {
@@ -24,6 +24,9 @@ namespace Server.DialogHandler.Model
             Text = answer;
         }
 
-        static int NexId() => ++globalId;
+        static void NexId()
+        {
+            ++globalId;
+        }
     }
 }

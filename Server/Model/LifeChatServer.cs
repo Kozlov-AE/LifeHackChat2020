@@ -1,4 +1,6 @@
-﻿using Server.Mediator;
+﻿using Server.ClientCommandHandler;
+using Server.Mediator;
+using Server.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +20,6 @@ namespace Server.Model
         public event Action<ClientDataHandler>? OnClientDisconected;
         public event Action<ClientDataHandler>? OnClientConnected;
         public event Action<ClientModel>? OnClientCreated;
-
-        delegate void UserCommand(object parameter);
-        Dictionary<string, UserCommand> UserCommands;
 
         static TcpListener? tcpListener;
 
@@ -104,23 +103,24 @@ namespace Server.Model
             }
         }
 
-        #region Текстовые команды серверу
-        void CloseUserConnection(string userId)
+        public void CloseUserConnection(string userId)
         {
+            SendMessageToClient("Досвидания", userId);
             connections[userId].Close();
             connections.RemoveConnection(userId);
         }
 
-        void GetClientsList()
+        public void CloseUserConnectionByName(string userName)
         {
-            StringBuilder sb;
-            foreach (var c in connections.GetAllClients())
-            {
-                sb.Append()
-            }
-            
+            var c = connections.FirstOrDefault(c => c.UserName == userName);
+            CloseUserConnection(c?.Id);
         }
-        #endregion
+
+        public List<string> GetClientsNamesList()
+        {
+            return connections.GetAllClients().Select(c => c.UserName).ToList();
+        }
+
 
 
         // Удалить!

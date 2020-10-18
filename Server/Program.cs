@@ -1,4 +1,5 @@
-﻿using Server.DialogHandler;
+﻿using Server.ClientCommandHandler;
+using Server.DialogHandler;
 using Server.DialogHandler.Model;
 using Server.Mediator;
 using Server.Model;
@@ -14,18 +15,21 @@ namespace Server
     {
         static LifeChatServer? server;
         static Task? serverTask;
-        static IDialogHandler dialogHandler = new DialogHandler.DialogHandler(new MemoryDialogStorage());
+        static MessageHandler? messageHandler;
 
         static void Main(string[] args)
         {
             try
             {
-                dialogHandler.LoadData().Wait();
                 server = new LifeChatServer(new ConnectionStorageService());
+                messageHandler =
+                new MessageHandler(new DialogHandler.DialogHandler(new MemoryDialogStorage()),
+                new CommandHandler(server),
+                server);
                 server.OnStarted += Console.WriteLine;
                 server.OnClientCreated += (c) => Console.WriteLine($"Подключился новый клиент с Id \"{c?.Id}\"");
                 server.OnClientGetsMessage += Console.WriteLine;
-                server.OnClientGetsMessage += MessageProcessing;
+                server.OnClientGetsMessage += messageHandler.ProcessMessage;
                 server.OnClientConnected += (c) => Console.WriteLine($"Клиент с Id {c.Id} указал свое имя \"{c.UserName}\"");
                 server.OnClientDisconected += (c) => Console.WriteLine($"Клиент {c.UserName} отключился от сервера");
                 server.OnException += Console.WriteLine;
@@ -37,22 +41,6 @@ namespace Server
                 server.Disconnect();
                 Console.WriteLine(ex.Message);
             }
-        }
-
-        private static void MessageProcessing (ClientMessageHandler handler)
-        {
-            const string insertMessage = "\n Введите сообщение";
-            const string noAnswer = "Я не знаю ответ, давайте попробуем еще раз.";
-
-            if (dialogHandler.GetAnswer(handler.Message) is string answer)
-            {
-                answer.Concat(insertMessage);
-            }
-            else
-            {
-                answer = noAnswer;
-            }
-            server.SendMessageToClient(answer, handler.Client.Id);
         }
     }
 }

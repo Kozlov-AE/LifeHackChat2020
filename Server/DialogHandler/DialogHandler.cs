@@ -1,4 +1,7 @@
-﻿using Server.DialogHandler.Model;
+﻿using Server.ClientCommandHandler;
+using Server.DialogHandler.Model;
+using Server.Model;
+using Server.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +26,7 @@ namespace Server.DialogHandler
 
         public string? GetAnswer(string message)
         {
+            
             return dialogStorage.GetAllRequests()
                 ?.FirstOrDefault(r => r.Text.ToLower() == message.ToLower())
                 ?.GetRandomAnswer()?.Text ?? null;
@@ -31,6 +35,11 @@ namespace Server.DialogHandler
         public async Task LoadData()
         {
             await dialogStorage.LoadBase();
+        }
+
+        public IReadOnlyCollection<string> AllQuestions()
+        {
+            return dialogStorage?.GetAllRequests()?.Select(r => r.Text)?.ToList();
         }
     }
 }

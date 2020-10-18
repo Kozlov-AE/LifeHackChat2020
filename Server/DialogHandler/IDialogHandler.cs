@@ -13,5 +13,8 @@ namespace Server.DialogHandler
 
         /// <summary>Загрузка данных для диалога</summary>
         public Task LoadData();
+
+        /// <summary>Получить список всех известных вопросов</summary>
+        public IReadOnlyCollection<string> AllQuestions();
     }
 }

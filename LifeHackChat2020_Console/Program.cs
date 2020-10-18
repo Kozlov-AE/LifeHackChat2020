@@ -1,4 +1,4 @@
-﻿using Data.TCPConnection;
+﻿using Logic.TCPConnection;
 using System;
 using System.Threading.Tasks;
 
@@ -19,9 +19,9 @@ namespace LifeHackChat2020_Console
             client.ReceivedMessage += MessagePrint;
             SendMessage(client);
             }
-            catch
+            catch (Exception ex)
             {
-                Console.WriteLine("Какая то ошибка");
+                Console.WriteLine(ex.Message);
             }
             Console.ReadLine();
         }
@@ -60,7 +60,13 @@ namespace LifeHackChat2020_Console
             while (true)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                client.SendMessage(Console.ReadLine());
+                string message = Console.ReadLine();
+                if (message.ToLower() == "пока" || message.ToLower() == "/пока")
+                {
+                    client.Dispose();
+                    Environment.Exit(0);
+                }
+                client.SendMessage(message);
             }
         }
     }
