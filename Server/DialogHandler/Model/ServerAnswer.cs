@@ -10,13 +10,15 @@ namespace Server.DialogHandler.Model
         static int globalId;
         static ServerAnswer()
         {
-            globalId = 1;
+            globalId = 0;
         }
 
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public int ClientRequestId { get; set; }
         public string? Text { get; set; }
 
+        public ServerAnswer()
+        { }
         public ServerAnswer(int requestId, string answer)
         {
             Id = NexId();

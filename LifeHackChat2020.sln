@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Data\Logic.csproj", "{55ACF043-8F7F-492B-ACE5-0D7FC9178F99}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClient", "ConsoleClient\ConsoleClient.csproj", "{C6E8C1AD-1A87-4503-93FF-3E7B574F8FF0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeHackChat2020_WinClient", "LifeHackChat2020_WinClient\LifeHackChat2020_WinClient.csproj", "{230BA5EF-8DEC-44DF-927F-2FE7FFD7F383}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeHackChat2020_Console", "LifeHackChat2020_Console\LifeHackChat2020_Console.csproj", "{D7F766CC-B074-4D75-9327-B821F17ED5C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnswerCreater", "AnswerCreater\AnswerCreater.csproj", "{70EC4697-26DA-4614-9281-CBC9D142BE71}"
@@ -29,14 +25,6 @@ Global
 		{55ACF043-8F7F-492B-ACE5-0D7FC9178F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55ACF043-8F7F-492B-ACE5-0D7FC9178F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55ACF043-8F7F-492B-ACE5-0D7FC9178F99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C6E8C1AD-1A87-4503-93FF-3E7B574F8FF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6E8C1AD-1A87-4503-93FF-3E7B574F8FF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6E8C1AD-1A87-4503-93FF-3E7B574F8FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6E8C1AD-1A87-4503-93FF-3E7B574F8FF0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{230BA5EF-8DEC-44DF-927F-2FE7FFD7F383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{230BA5EF-8DEC-44DF-927F-2FE7FFD7F383}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{230BA5EF-8DEC-44DF-927F-2FE7FFD7F383}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{230BA5EF-8DEC-44DF-927F-2FE7FFD7F383}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D7F766CC-B074-4D75-9327-B821F17ED5C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D7F766CC-B074-4D75-9327-B821F17ED5C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7F766CC-B074-4D75-9327-B821F17ED5C7}.Release|Any CPU.ActiveCfg = Release|Any CPU

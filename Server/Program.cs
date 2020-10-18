@@ -23,7 +23,7 @@ namespace Server
             {
                 server = new LifeChatServer(new ConnectionStorageService());
                 messageHandler =
-                new MessageHandler(new DialogHandler.DialogHandler(new MemoryDialogStorage()),
+                new MessageHandler(new DialogHandler.DialogHandler(new DialogStorage("base.json")),
                 new CommandHandler(server),
                 server);
                 server.OnStarted += Console.WriteLine;
@@ -38,7 +38,6 @@ namespace Server
             }
             catch (Exception ex)
             { 
-                server.Disconnect();
                 Console.WriteLine(ex.Message);
             }
         }

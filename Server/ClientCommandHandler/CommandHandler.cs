@@ -26,11 +26,6 @@ namespace Server.ClientCommandHandler
                 .GetMethods()
                 .Where(m => m.GetCustomAttribute<CommandAttribute>() != null)
                 .ToDictionary(m => m.GetCustomAttribute<CommandAttribute>()!.Name);
-            //commands = Assembly.GetExecutingAssembly()
-            //    .GetTypes()
-            //    .SelectMany(t => t.GetMethods())
-            //    .Where(m => m.GetCustomAttribute<CommandAttribute>() != null)
-            //    .ToDictionary(m => m.GetCustomAttribute<CommandAttribute>()!.Name);
         }
 
         public void ExecuteCommand(object obj, string command, ClientGroups group, object[] par = null)

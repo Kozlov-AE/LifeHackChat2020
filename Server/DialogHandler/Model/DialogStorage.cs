@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 
 namespace Server.DialogHandler.Model
@@ -11,21 +13,23 @@ namespace Server.DialogHandler.Model
     public class DialogStorage : IDialogStorage
     {
         protected List<ClientRequest> requests = new List<ClientRequest>();
-        protected string pathToBase = "base.txt";
+        protected string pathToBase = "base.json";
 
         public DialogStorage(string pathToBase)
         {
             this.pathToBase = pathToBase;
+            LoadBase().Wait();
         }
 
-        public async Task SaveBase()
+        public virtual void SaveBase()
         {
-            using (FileStream fs = File.Create(pathToBase))
+            var options = new JsonSerializerOptions
             {
-                await JsonSerializer.SerializeAsync(
-                    fs, requests, 
-                    new JsonSerializerOptions { WriteIndented = true });
-            }
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
+                WriteIndented = true
+            };
+            var json = JsonSerializer.Serialize<List<ClientRequest>>(requests, options);
+            File.WriteAllText(pathToBase, json);
         }
 
         public DialogStorage()
@@ -49,14 +53,13 @@ namespace Server.DialogHandler.Model
 
         public virtual async Task LoadBase()
         {
-            if (!File.Exists(pathToBase))
+            var options = new JsonSerializerOptions
             {
-                File.Create(pathToBase);
-            }
-            using (FileStream fs = File.OpenRead(pathToBase))
-            {
-                requests = await JsonSerializer.DeserializeAsync<List<ClientRequest>>(fs);
-            }
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
+                WriteIndented = true
+            };
+            var jsonString = File.ReadAllText(pathToBase);
+            requests = JsonSerializer.Deserialize<List<ClientRequest>>(jsonString, options);
         }
     }
 }

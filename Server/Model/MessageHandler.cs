@@ -25,6 +25,12 @@ namespace Server.Model
 
         public void ProcessMessage(ClientMessageHandler? handler)
         {
+            void Exc(string str)
+            {
+                server.SendMessageToClient(str, handler.Client.Id);
+            }
+
+            ch.Exception += Exc;
             var words = handler?.Message?.Split(new char[] { ' ', '.', '?', '!' }, StringSplitOptions.RemoveEmptyEntries);
             if (words != null && words[0][0] == '/')
             {
@@ -57,9 +63,18 @@ namespace Server.Model
                 }
                 server.SendMessageToClient(answer, handler.Client.Id);
             }
-
+            ch.Exception -= Exc;
         }
 
+        private string ListToString(IEnumerable<string> list)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var s in list)
+            {
+                sb.Append($"{s} \n");
+            }
+            return sb.ToString();
+        }
         #region AppCommands
         [CommandGroup(ClientGroups.admin)]
         [CommandGroup(ClientGroups.user)]
@@ -105,22 +120,14 @@ namespace Server.Model
             server.SendMessageToClient(sb.ToString(), handler.Client.Id);
         }
 
-        [CommandAttribute("/Hi", "Выводит Выводит список всех команд с описаниями")]
-        public void SayHello(ClientMessageHandler? handler)
+        [CommandAttribute("/РусскийТест", "Просто тестовый метод, который вызывается русскими символами и не обозначен атрибутами пользователя")]
+        public void WithoutGrouAttributeCommand(ClientMessageHandler? handler)
         {
-            server.SendMessageToClient("Написал привет!", handler.Client.Id);
+            server.SendMessageToClient("Тестовый метод, в атрибутах не указаны права запуска \n" +
+                "Значит виден любому пользователю)", handler.Client.Id);
         }
 
         #endregion
 
-        private string ListToString(IEnumerable<string> list)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (var s in list)
-            {
-                sb.Append($"{s} \n");
-            }
-            return sb.ToString();
-        }
     }
 }

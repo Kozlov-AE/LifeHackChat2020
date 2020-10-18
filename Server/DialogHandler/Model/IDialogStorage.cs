@@ -23,7 +23,7 @@ namespace Server.DialogHandler.Model
         public IReadOnlyCollection<ClientRequest> GetAllRequests();
 
         /// <summary>Зафиксировать содержимое хранилища</summary>
-        public Task SaveBase();
+        public void SaveBase();
 
         /// <summary>Загрузить базу из хранилища</summary>
         public Task LoadBase();
