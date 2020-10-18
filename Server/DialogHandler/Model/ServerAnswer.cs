@@ -24,9 +24,9 @@ namespace Server.DialogHandler.Model
             Text = answer;
         }
 
-        static void NexId()
+        static int NexId()
         {
-            ++globalId;
+            return ++globalId;
         }
     }
 }

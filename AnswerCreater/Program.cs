@@ -6,6 +6,7 @@ namespace AnswerCreater
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
