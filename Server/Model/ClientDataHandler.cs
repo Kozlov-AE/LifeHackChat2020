@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Server.Model
 {
+    /// <summary>Данные клиента</summary>
     public class ClientDataHandler
     {
         public string? Id { get; private set; }

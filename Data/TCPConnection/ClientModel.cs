@@ -10,13 +10,20 @@ namespace Logic.TCPConnection
     public class ClientModel : IDisposable
     {
         #region Events
+        
+        /// <summary>Получено сообщение </summary>
         public event Action<object, MessageHandler> ReceivedMessage;
+        /// <summary>Отправлено сообщение </summary>
         public event Action<object, MessageHandler> SendedMessage;
+        
+        /// <summary>Произошло исключение </summary>
         public event Action<object, ExceptionHandler> ExceptionEvent;
+        /// <summary>Подключились к серверу</summary>
         public event Action Connected;
+        /// <summary> Отключились от сервера</summary>
         public event Action Disconected;
         #endregion
-
+        
         public bool IsConnected;
         string host;
         int port;
@@ -29,6 +36,7 @@ namespace Logic.TCPConnection
             this.port = port;
         }
 
+        /// <summary> Подключиться к серверу </summary>
         public void Connect()
         {
             client = new TcpClient();

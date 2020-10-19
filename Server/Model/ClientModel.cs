@@ -6,12 +6,18 @@ using System.Text;
 
 namespace Server.Model
 {
+    /// <summary>Логика работы с подключением</summary>
     public class ClientModel
     {
+        /// <summary>Создано подключение</summary>
         static public event Action<ClientModel>? OnCreated;
+        /// <summary>Произошло отключение от сервера</summary>
         public event Action<ClientDataHandler>? OnDisconected;
+        /// <summary>Произошло подключение к серверу</summary>
         public event Action<ClientDataHandler>? OnConnected;
+        /// <summary>Получено новое сообщение</summary>
         public event Action<ClientMessageHandler>? OnGetMessage;
+        /// <summary>Произошла ошибка</summary>
         public event Action<string>? OnException;
 
         public string? Id { get; private set; }

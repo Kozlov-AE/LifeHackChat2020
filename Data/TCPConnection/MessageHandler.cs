@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Logic.TCPConnection
 {
+    /// <summary>Упаковка для сообщения</summary>
     public class MessageHandler
     {
         public DateTime Time { get; }

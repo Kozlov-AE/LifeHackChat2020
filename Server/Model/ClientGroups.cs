@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Server.Model
 {
+    /// <summary>Группы клиентов</summary>
     public enum ClientGroups
     {
         /// <summary>Обычные пользователи.</summary>

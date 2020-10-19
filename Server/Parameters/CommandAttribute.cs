@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Server.Parameters
 {
+    /// <summary>Атрибут помечающий метод как команду от клиента</summary>
     [System.AttributeUsage(System.AttributeTargets.Method)]
     public class CommandAttribute : Attribute
     {

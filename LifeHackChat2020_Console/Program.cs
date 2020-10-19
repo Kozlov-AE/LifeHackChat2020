@@ -25,19 +25,21 @@ namespace LifeHackChat2020_Console
             }
             Console.ReadLine();
         }
-
+/// <summary>Вывод сообщения об отключении от сервера</summary>
         private static void PrintDisconnected()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Отключились от сервера");
         }
-
+/// <summary>Сообщение о подключении к серверу</summary>
         private static void PrintConnected()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Подключение выполнено");
         }
-
+/// <summary>Вывод сообщения на экран</summary>
+/// <param name="sender">Отправитель</param>
+/// <param name="message">Сообщение</param>
         private static void MessagePrint(object sender, MessageHandler message)
         {
             if ((string)sender == "Сервер")
@@ -47,14 +49,17 @@ namespace LifeHackChat2020_Console
                 Console.ResetColor();
             }
         }
-
+/// <summary>Вывод сообщения об ошибке</summary>
+/// <param name="sender">Отправитель</param>
+/// <param name="args">аргументы ошибки</param>
         static void ExceptionPrint(object sender, ExceptionHandler args)
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"{args.Date.ToLongTimeString()}   {(string)sender}: {args.Message}");
             Console.ResetColor();
         }
-
+/// <summary>Метод отправки сообщения</summary>
+/// <param name="client">Получатель сообщения</param>
         static void SendMessage(ClientModel client)
         {
             while (true)
