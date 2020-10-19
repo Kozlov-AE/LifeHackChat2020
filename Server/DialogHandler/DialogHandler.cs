@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Server.DialogHandler
 {
+    /// <summary>Класс управляющий диалогами (не командами)</summary>
     public class DialogHandler : IDialogHandler
     {
         protected IDialogStorage dialogStorage;

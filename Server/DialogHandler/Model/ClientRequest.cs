@@ -6,8 +6,10 @@ using System.Text;
 
 namespace Server.DialogHandler.Model
 {
+    /// <summary>Вопрос пользователя</summary>
     public class ClientRequest
     {
+        /// <summary>Статик int для формирования Id</summary>
         static int globalId;
         static ClientRequest()
         {
@@ -31,8 +33,11 @@ namespace Server.DialogHandler.Model
             Id = NexId();
         }
 
+        /// <summary>Id запроса</summary>
         public int Id { get; set; } 
+        /// <summary>Текст запроса</summary>
         public string? Text { get; set; }
+        /// <summary>Список ответов на запрос</summary>
         public List<ServerAnswer> answers { get; set; }
 
         /// <summary>Добавить ответ для этого вопроса</summary>
@@ -47,6 +52,7 @@ namespace Server.DialogHandler.Model
         public ServerAnswer? GetRandomAnswer() 
             => answers.Count > 0 ? answers.ElementAt(new Random().Next(0, answers.Count)) : null;
 
+        /// <summary>Следующий ID</summary>
         static int NexId()
         {
             return ++globalId;

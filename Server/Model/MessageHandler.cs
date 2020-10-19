@@ -9,6 +9,7 @@ using System.Text;
 
 namespace Server.Model
 {
+    /// <summary>Класс обработчик входящих сообщений и описание пользовательских команд</summary>
     public class MessageHandler
     {
         IDialogHandler dh;
@@ -23,6 +24,8 @@ namespace Server.Model
             this.server = server;
         }
 
+        /// <summary>Обрабатыает сообщение. Определяет тип сообщения</summary>
+        /// <param name="handler">Хранитель сообщения и информации о нем</param>
         public void ProcessMessage(ClientMessageHandler? handler)
         {
             void Exc(string str)
@@ -66,6 +69,9 @@ namespace Server.Model
             ch.Exception -= Exc;
         }
 
+        /// <summary>Преобразует список в столбец строк</summary>
+        /// <param name="list">Исходный список</param>
+        /// <returns>Строку с переносами</returns>
         private string ListToString(IEnumerable<string> list)
         {
             StringBuilder sb = new StringBuilder();
@@ -75,22 +81,27 @@ namespace Server.Model
             }
             return sb.ToString();
         }
+
         #region AppCommands
+        /// <summary>Закрытие подключения по ID пользователя (Пользователю доступно только своё ID)</summary>
         [CommandGroup(ClientGroups.admin)]
         [CommandGroup(ClientGroups.user)]
-        [CommandAttribute("/KillMySelf", "Отклчиться от сервера")]
+        [CommandAttribute("/KillMySelf", "Отключиться от сервера")]
         public void CloseUserConnection(ClientMessageHandler? handler)
         {
             server.CloseUserConnection(handler.Client.Id);
         }
 
+        /// <summary>Закрытие подключения по имени пользователя</summary>
         [CommandGroup(ClientGroups.admin)]
         [CommandAttribute("/KillClientByName", "Отключить клиента от сервера. Формат команды: /KillClientByName ClientName")]
         public void CloseUserConnectionByName(ClientMessageHandler? handler)
         {
             server.CloseUserConnectionByName(handler.Client.UserName);
+            server.SendMessageToClient("Клиент отключен", handler.Client.UserName);
         }
 
+        /// <summary>Отправить клиенту список подключенных клиентов</summary>
         [CommandGroup(ClientGroups.admin)]
         [CommandAttribute("/GetAllClients", "Получить список подключенных клиентов")]
         public void GetClientsNamesList(ClientMessageHandler? handler)
@@ -98,6 +109,7 @@ namespace Server.Model
             server.SendMessageToClient(ListToString(server.GetClientsNamesList()), handler.Client.Id);
         }
 
+        /// <summary>Отправить клиенту список вопросов, на которые сервер знает ответы</summary>
         [CommandGroup(ClientGroups.admin)]
         [CommandGroup(ClientGroups.user)]
         [CommandAttribute("/GetQuestions", "Получить список вопросов, на которые сервер знает ответы")]
@@ -106,6 +118,7 @@ namespace Server.Model
             server.SendMessageToClient(ListToString(dh.AllQuestions()), handler.Client.Id);
         }
 
+        /// <summary>Отправить клиенту список доступных команд</summary>
         [CommandGroup(ClientGroups.admin)]
         [CommandGroup(ClientGroups.user)]
         [CommandAttribute("/Help", "Выводит Выводит список всех команд с описаниями")]
@@ -120,6 +133,7 @@ namespace Server.Model
             server.SendMessageToClient(sb.ToString(), handler.Client.Id);
         }
 
+        /// <summary>Просто тестовый метод, описанный русским аттрибутом и не имеющий привязки к группе пользователей</summary>
         [CommandAttribute("/РусскийТест", "Просто тестовый метод, который вызывается русскими символами и не обозначен атрибутами пользователя")]
         public void WithoutGrouAttributeCommand(ClientMessageHandler? handler)
         {

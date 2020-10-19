@@ -12,17 +12,26 @@ using System.Threading.Tasks;
 
 namespace Server.Model
 {
+    /// <summary>Серверная логика</summary>
     public class LifeChatServer: IDisposable
     {
+        /// <summary>Событие начала прослушивания порта</summary>
         public event Action<string>? OnStarted;
+        /// <summary>Событие возникающее при ошибке</summary>
         public event Action<string>? OnException;
+        /// <summary>Событие возникающее при получении сервером сообщения от клиента</summary>
         public event Action<ClientMessageHandler>? OnClientGetsMessage;
+        /// <summary>Событие при отключении клиента от сервера</summary>
         public event Action<ClientDataHandler>? OnClientDisconected;
+        /// <summary>событие при подключении клиента к серверу</summary>
         public event Action<ClientDataHandler>? OnClientConnected;
+        /// <summary>Событие при создании нового клиента при новом подключении</summary>
         public event Action<ClientModel>? OnClientCreated;
 
+        /// <summary>Слушатель порта</summary>
         static TcpListener? tcpListener;
 
+        /// <summary>Хранилище подключений</summary>
         public IConnectionStorage? connections;
 
         public LifeChatServer (IConnectionStorage connections)
@@ -30,6 +39,7 @@ namespace Server.Model
             this.connections = connections;
         }
 
+        /// <summary>Метод запуска прослушки порта и приема сообщений от пользователя</summary>
         public void Listen()
         {
             try
@@ -60,7 +70,7 @@ namespace Server.Model
             catch (Exception ex)
             {
                 OnException?.Invoke(ex.Message);
-                Disconnect();
+                Dispose();
             }
         }
 
@@ -103,6 +113,8 @@ namespace Server.Model
             }
         }
 
+        /// <summary>Закрыть подключене клента по его id</summary>
+        /// <param name="userId">id подключения</param>
         public void CloseUserConnection(string userId)
         {
             SendMessageToClient("Досвидания", userId);
@@ -110,30 +122,21 @@ namespace Server.Model
             connections.RemoveConnection(userId);
         }
 
+        /// <summary>Закрыть подклчение клиента по его имени</summary>
+        /// <param name="userName">Имя подключения</param>
         public void CloseUserConnectionByName(string userName)
         {
             var c = connections.FirstOrDefault(c => c.UserName == userName);
             CloseUserConnection(c?.Id);
         }
 
+        /// <summary>Получить имена подключенных клиентов</summary>
         public List<string> GetClientsNamesList()
         {
             return connections.GetAllClients().Select(c => c.UserName).ToList();
         }
 
-
-
-        // Удалить!
-        public void Disconnect()
-        {
-            //Перестаем слушать порт
-            tcpListener.Stop();
-            //Удаляем все подключения
-            connections.CloseAndRemoveAll();
-            //Закрываем приложение (в core нужно нажать энтер)
-            Environment.Exit(0);
-        }
-
+        /// <summary>Закрыть все подклчения и закрыть серверную оболочку</summary>
         public void Dispose()
         {
             //Перестаем слушать порт

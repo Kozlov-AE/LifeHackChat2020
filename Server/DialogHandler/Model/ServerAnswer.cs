@@ -4,9 +4,10 @@ using System.Text;
 
 namespace Server.DialogHandler.Model
 {
+    /// <summary>Ответ сервена на запрос клиента</summary>
     public class ServerAnswer
     {
-        //Для разнообразия без GUID
+        /// <summary>Статик int для формирования Id</summary>
         static int globalId;
         static ServerAnswer()
         {

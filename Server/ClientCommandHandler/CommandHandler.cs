@@ -7,20 +7,22 @@ using System.Reflection;
 
 namespace Server.ClientCommandHandler
 {
+    /// <summary>Класс обрабатывающий команды от клиента</summary>
     public class CommandHandler
     {
+        /// <summary>Событие, возникающее при ошибке</summary>
         public event Action<string> Exception;
 
-        LifeChatServer? server;
+        /// <summary>Хранит пары Наименование (из аттрибута) - методИнфо</summary>
         Dictionary<string?, MethodInfo> commands;
 
-        public CommandHandler(LifeChatServer? server)
+        public CommandHandler()
         {
-            this.server = server;
             GetCommandList();
         }
 
-        public void GetCommandList()
+        /// <summary>Получить список команд из класса <see cref="MessageHandler"/> и сохранить его в словарь класа</summary>
+        void GetCommandList()
         {
             commands = typeof(MessageHandler)
                 .GetMethods()
@@ -28,6 +30,11 @@ namespace Server.ClientCommandHandler
                 .ToDictionary(m => m.GetCustomAttribute<CommandAttribute>()!.Name);
         }
 
+        /// <summary>Выполнение метода из словаря</summary>
+        /// <param name="obj">Объект класса, хранящего метод</param>
+        /// <param name="command">Имя класса, описанное в атрибуте</param>
+        /// <param name="group">Группа пользователя, инициирующего запуск метода</param>
+        /// <param name="par">Параметры необходимые для выполнения метода</param>
         public void ExecuteCommand(object obj, string command, ClientGroups group, object[] par = null)
         {
             MethodInfo? method;
@@ -55,6 +62,8 @@ namespace Server.ClientCommandHandler
             }
         }
         
+        /// <summary>Получить словарь с командами, доступными только определенной группе пользователей</summary>
+        /// <param name="group">Группа пользователей для фильтрации словаря</param>
         public IReadOnlyDictionary<string, string> GetCommands(ClientGroups group)
         {
             Dictionary<string, string?> result = new Dictionary<string, string>();
@@ -75,6 +84,7 @@ namespace Server.ClientCommandHandler
             return result;
         }
 
+        /// <summary>Проверяет наличие группы в атрибутах метода</summary>
         private bool EqualAttribute(IEnumerable<CommandGroupAttribute> attrs, ClientGroups group)
         {
             foreach (var a in attrs)

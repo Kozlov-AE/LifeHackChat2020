@@ -21,10 +21,12 @@ namespace Server
         {
             try
             {
+                //Запускаем сервер
                 server = new LifeChatServer(new ConnectionStorageService());
+                //Инициализируем обработчик входящих сообщений
                 messageHandler =
                 new MessageHandler(new DialogHandler.DialogHandler(new DialogStorage("base.json")),
-                new CommandHandler(server),
+                new CommandHandler(),
                 server);
                 server.OnStarted += Console.WriteLine;
                 server.OnClientCreated += (c) => Console.WriteLine($"Подключился новый клиент с Id \"{c?.Id}\"");
