@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.DialogHandler
+namespace Logic.Server.DialogHandler
 {
     public interface IDialogHandler
     {

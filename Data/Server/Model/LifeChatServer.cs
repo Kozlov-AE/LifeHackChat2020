@@ -1,6 +1,6 @@
-﻿using Server.ClientCommandHandler;
-using Server.Mediator;
-using Server.Parameters;
+﻿using Logic.Server.ClientCommandHandler;
+using Logic.Server.Mediator;
+using Logic.Server.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Server.Model
+namespace Logic.Server.Model
 {
     /// <summary>Серверная логика</summary>
     public class LifeChatServer: IDisposable

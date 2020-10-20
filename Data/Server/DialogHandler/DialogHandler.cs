@@ -1,14 +1,14 @@
-﻿using Server.ClientCommandHandler;
-using Server.DialogHandler.Model;
-using Server.Model;
-using Server.Parameters;
+﻿using Logic.Server.ClientCommandHandler;
+using Logic.Server.DialogHandler.Model;
+using Logic.Server.Model;
+using Logic.Server.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.DialogHandler
+namespace Logic.Server.DialogHandler
 {
     /// <summary>Класс управляющий диалогами (не командами)</summary>
     public class DialogHandler : IDialogHandler

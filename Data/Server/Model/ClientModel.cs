@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Reflection.Metadata;
 using System.Text;
 
-namespace Server.Model
+namespace Logic.Server.Model
 {
     /// <summary>Логика работы с подключением</summary>
     public class ClientModel

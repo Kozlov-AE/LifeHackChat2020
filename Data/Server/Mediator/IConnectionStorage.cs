@@ -1,8 +1,8 @@
-﻿using Server.Model;
+﻿using Logic.Server.Model;
 using System;
 using System.Collections.Generic;
 
-namespace Server.Mediator
+namespace Logic.Server.Mediator
 {
     public interface IConnectionStorage
     {

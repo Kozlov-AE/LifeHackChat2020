@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Server.DialogHandler.Model
+namespace Logic.Server.DialogHandler.Model
 {
     public interface IDialogStorage
     {

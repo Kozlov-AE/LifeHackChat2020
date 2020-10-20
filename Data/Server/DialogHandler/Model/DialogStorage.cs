@@ -8,7 +8,7 @@ using System.Text.Json;
 using System.Text.Unicode;
 using System.Threading.Tasks;
 
-namespace Server.DialogHandler.Model
+namespace Logic.Server.DialogHandler.Model
 {
     public class DialogStorage : IDialogStorage
     {

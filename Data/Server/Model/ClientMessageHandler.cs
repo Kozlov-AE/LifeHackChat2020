@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server.Model
+namespace Logic.Server.Model
 {
     /// <summary>Хранитель сообщения и сопутствующих параметров</summary>
     public class ClientMessageHandler

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Server.DialogHandler.Model
+namespace Logic.Server.DialogHandler.Model
 {
     /// <summary>Вопрос пользователя</summary>
     public class ClientRequest

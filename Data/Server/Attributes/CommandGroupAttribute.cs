@@ -1,9 +1,9 @@
-﻿using Server.Model;
+﻿using Logic.Server.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server.Parameters
+namespace Logic.Server.Attributes
 {
     /// <summary>Атрибут разрешающий выполнение команды определенной группе клиентов</summary>
     [AttributeUsage(System.AttributeTargets.Method, AllowMultiple = true)]

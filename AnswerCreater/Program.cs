@@ -1,4 +1,4 @@
-﻿using Server.DialogHandler.Model;
+﻿using Logic.Server.DialogHandler.Model;
 using System;
 using System.Collections.Generic;
 

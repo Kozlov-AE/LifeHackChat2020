@@ -1,13 +1,13 @@
-﻿using Server.ClientCommandHandler;
-using Server.DialogHandler;
-using Server.Parameters;
+﻿using Logic.Server.ClientCommandHandler;
+using Logic.Server.DialogHandler;
+using Logic.Server.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
 
-namespace Server.Model
+namespace Logic.Server.Model
 {
     /// <summary>Класс обработчик входящих сообщений и описание пользовательских команд</summary>
     public class MessageHandler

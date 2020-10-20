@@ -1,9 +1,9 @@
-﻿using Server.Model;
+﻿using Logic.Server.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server.Parameters
+namespace Logic.Server.Attributes
 {
     /// <summary>Атрибут помечающий метод как команду от клиента</summary>
     [System.AttributeUsage(System.AttributeTargets.Method)]

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server.DialogHandler.Model
+namespace Logic.Server.DialogHandler.Model
 {
     /// <summary>Ответ сервена на запрос клиента</summary>
     public class ServerAnswer

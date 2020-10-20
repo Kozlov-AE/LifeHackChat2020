@@ -1,11 +1,11 @@
-﻿using Server.Model;
-using Server.Parameters;
+﻿using Logic.Server.Model;
+using Logic.Server.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Server.ClientCommandHandler
+namespace Logic.Server.ClientCommandHandler
 {
     /// <summary>Класс обрабатывающий команды от клиента</summary>
     public class CommandHandler

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Server.Model
+namespace Logic.Server.Model
 {
     /// <summary>Группы клиентов</summary>
     public enum ClientGroups

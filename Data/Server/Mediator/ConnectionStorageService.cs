@@ -1,10 +1,10 @@
-﻿using Server.Model;
+﻿using Logic.Server.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Server.Mediator
+namespace Logic.Server.Mediator
 {
     public class ConnectionStorageService : IConnectionStorage
     {

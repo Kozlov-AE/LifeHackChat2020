@@ -1,15 +1,15 @@
-﻿using Server.ClientCommandHandler;
-using Server.DialogHandler;
-using Server.DialogHandler.Model;
-using Server.Mediator;
-using Server.Model;
+﻿using Logic.Server.ClientCommandHandler;
+using Logic.Server.DialogHandler;
+using Logic.Server.DialogHandler.Model;
+using Logic.Server.Mediator;
+using Logic.Server.Model;
 using System;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Server
+namespace Logic.Server
 {
     class Program
     {
