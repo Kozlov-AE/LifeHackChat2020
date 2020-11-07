@@ -64,27 +64,42 @@ namespace Logic.Server.Model
                 // В бесконечном цикле получаем сообщения от клиента
                 while (true)
                 {
-                    try
-                    {
+                    //try
+                    //{
                         message = GetMessage();
                         OnGetMessage?.Invoke(new ClientMessageHandler(message, this));
-                    }
-                    catch
-                    {
-                        OnDisconected?.Invoke(new ClientDataHandler(this));
-                        break;
-                    }
+                    //}
+                    //catch
+                    //{
+                    //    OnDisconected?.Invoke(new ClientDataHandler(this));
+                    //    break;
+                    //}
                 }
+            }
+            catch(InvalidCastException e)
+            {
+                OnException?.Invoke(e.Message);
+                OnDisconected?.Invoke(new ClientDataHandler(this));
+                Close();
+            }
+
+            catch (ObjectDisposedException e)
+            {
+                OnException?.Invoke(e.Message);
+                OnDisconected?.Invoke(new ClientDataHandler(this));
+                Close();
             }
             catch (Exception e)
             {
                 OnException?.Invoke(e.Message);
-            }
-            finally
-            {
                 OnDisconected?.Invoke(new ClientDataHandler(this));
                 Close();
             }
+            //finally
+            //{
+            //    OnDisconected?.Invoke(new ClientDataHandler(this));
+            //    Close();
+            //}
         }
 
         /// <summary>Чтение входящего сообщения и преобразование его в строку</summary>

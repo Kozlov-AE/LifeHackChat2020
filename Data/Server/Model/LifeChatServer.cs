@@ -34,6 +34,9 @@ namespace Logic.Server.Model
         /// <summary>Хранилище подключений</summary>
         public IConnectionStorage? connections;
 
+        Task clientTask;
+        bool isListen = true;
+
         public LifeChatServer (IConnectionStorage connections)
         {
             this.connections = connections;
@@ -49,7 +52,7 @@ namespace Logic.Server.Model
 
                 OnStarted?.Invoke("Сервер запущен, ожидание подключений...");
 
-                while (true)
+                while (isListen)
                 {
                     TcpClient tcpClient = tcpListener.AcceptTcpClient();
 
@@ -62,7 +65,7 @@ namespace Logic.Server.Model
                     clientModel.OnDisconected += OnClientDisconected;
                     clientModel.OnDisconected += (c) => connections.RemoveConnection(c.Id);
 
-                    var clientTask = Task.Factory.StartNew(clientModel.Process);
+                    clientTask = Task.Factory.StartNew(clientModel.Process);
                     clientTask.Wait();
                 }
             }
@@ -70,7 +73,11 @@ namespace Logic.Server.Model
             catch (Exception ex)
             {
                 OnException?.Invoke(ex.Message);
-                Dispose();
+                isListen = false;
+                clientTask.Dispose();
+                tcpListener.Stop();
+                //Dispose();
+                Listen();
             }
         }
 
