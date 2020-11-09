@@ -6,18 +6,23 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{5D212AC4-A627-46C3-93ED-4E3CA8F823ED}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "Data\Logic.csproj", "{55ACF043-8F7F-492B-ACE5-0D7FC9178F99}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D8BCFB68-FBB1-49E9-B719-0F7D63446A71} = {D8BCFB68-FBB1-49E9-B719-0F7D63446A71}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeHackChat2020_Console", "LifeHackChat2020_Console\LifeHackChat2020_Console.csproj", "{D7F766CC-B074-4D75-9327-B821F17ED5C7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnswerCreater", "AnswerCreater\AnswerCreater.csproj", "{70EC4697-26DA-4614-9281-CBC9D142BE71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinClient", "XamarinClient\XamarinClient\XamarinClient.csproj", "{D8BCFB68-FBB1-49E9-B719-0F7D63446A71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinClient", "XamarinClient\XamarinClient\XamarinClient.csproj", "{D8BCFB68-FBB1-49E9-B719-0F7D63446A71}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinClient.Android", "XamarinClient\XamarinClient.Android\XamarinClient.Android.csproj", "{06FBE96D-22D0-47D1-85E6-E3C4A65C8ACF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinClient.iOS", "XamarinClient\XamarinClient.iOS\XamarinClient.iOS.csproj", "{82469009-9F12-4F09-817B-1B0F77842088}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinClient.UWP", "XamarinClient\XamarinClient.UWP\XamarinClient.UWP.csproj", "{CE86F8D5-C110-458A-858D-B506F8D95025}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetStandartData", "NetStandartData\NetStandartData.csproj", "{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -451,6 +456,54 @@ Global
 		{CE86F8D5-C110-458A-858D-B506F8D95025}.Release|x86.ActiveCfg = Release|x86
 		{CE86F8D5-C110-458A-858D-B506F8D95025}.Release|x86.Build.0 = Release|x86
 		{CE86F8D5-C110-458A-858D-B506F8D95025}.Release|x86.Deploy.0 = Release|x86
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|ARM.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|ARM.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|iPhoneSimulator.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|x64.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|x64.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|x86.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Ad-Hoc|x86.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|Any CPU.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|ARM.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|ARM.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|iPhoneSimulator.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|x64.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|x64.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|x86.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.AppStore|x86.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|ARM.Build.0 = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|x64.Build.0 = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Debug|x86.Build.0 = Debug|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|ARM.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|ARM.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|iPhone.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|x64.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|x64.Build.0 = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|x86.ActiveCfg = Release|Any CPU
+		{38DFDC7E-80AB-49FE-A4DA-120E9E820A30}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
