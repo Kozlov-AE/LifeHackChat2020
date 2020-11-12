@@ -10,4 +10,8 @@
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.2.0.1422" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\NetStandartData\NetStandartData.csproj" />
+  </ItemGroup>
+
 </Project>

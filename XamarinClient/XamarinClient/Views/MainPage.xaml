@@ -6,7 +6,28 @@
     Title="{Binding Title}">
 
     <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
+        <ListView
+            x:Name="messageList"
+            HasUnevenRows="True"
+            ItemsSource="{Binding Messages}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <Frame Padding="5" BorderColor="Black">
+                                <StackLayout Orientation="Vertical">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label HorizontalOptions="Start" Text="{Binding Sender}" />
+                                        <Label HorizontalOptions="End" Text="{Binding Date}" />
+                                    </StackLayout>
+                                    <Label HorizontalOptions="StartAndExpand" Text="{Binding Text}" />
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
 
 </ContentPage>

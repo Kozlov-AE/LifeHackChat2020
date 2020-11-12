@@ -25,5 +25,13 @@ namespace XamarinClient.ViewModels.Models
 			set { SetProperty(ref text, value); }
 		}
 
+		/// <summary>Отправитель</summary>
+		private string sender;
+		public string Sender
+		{
+			get { return sender; }
+			set { SetProperty(ref sender, value); }
+		}
+
 	}
 }
