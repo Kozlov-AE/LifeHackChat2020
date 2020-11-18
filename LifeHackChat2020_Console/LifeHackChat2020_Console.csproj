@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Data\Logic.csproj" />
+    <ProjectReference Include="..\NetStandartData\NetStandartData.csproj" />
   </ItemGroup>
 
 </Project>

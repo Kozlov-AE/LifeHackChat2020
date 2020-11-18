@@ -16,7 +16,84 @@ namespace XamarinClient.ViewModels.DesignData
 		public MainPageViewModelDD(INavigationService navigationService, IPageDialogService dialogService)
 			 : base(navigationService, dialogService)
 		{
+			navService = navigationService;
+			dialService = dialogService;
+
+			IsConnected = true;
+			Messages = new ObservableCollection<MessageViewModel>()
+			{
+				new MessageViewModel()
+				{
+					Date = DateTime.Now,
+					Text = "Привет, я сервер!",
+					Sender = "Server"
+				},
+								new MessageViewModel()
+				{
+					Date = DateTime.Now,
+					Text = "А я человек! Привет)",
+					Sender = "Я"
+				},
+				new MessageViewModel()
+				{
+					Date = DateTime.Now,
+					Text = "Привет, я сервер!",
+					Sender = "Server"
+				},
+				new MessageViewModel()
+				{
+					Date = DateTime.Now,
+					Text = "А я человек! Привет)",
+					Sender = "Я"
+				},
+				new MessageViewModel()
+				{
+					Date = DateTime.Now,
+					Text = "Привет, я сервер!",
+					Sender = "Server"
+				},
+				new MessageViewModel()
+				{
+					Date = DateTime.Now,
+					Text = "Привет, я сервер!",
+					Sender = "Server"
+				},
+				new MessageViewModel()
+				{
+					Date = DateTime.Now,
+					Text = "Привет, я сервер!",
+					Sender = "Server"
+				},
+				new MessageViewModel()
+				{
+					Date = DateTime.Now,
+					Text = "Привет, я сервер!",
+					Sender = "Server"
+				},
+				new MessageViewModel()
+				{
+					Date = DateTime.Now,
+					Text = "А я человек! Привет)",
+					Sender = "Я"
+				},
+				new MessageViewModel()
+				{
+					Date = DateTime.Now,
+					Text = "А я человек! Привет)",
+					Sender = "Я"
+				},
+				new MessageViewModel()
+				{
+					Date = DateTime.Now,
+					Text = "Привет, я сервер!",
+					Sender = "Server"
+				},
+
+			};
 		}
+
+		private INavigationService navService;
+		private IPageDialogService dialService;
 
 		public MessageViewModel CurrentMessage { get; set; }
 

@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using XamarinClient.ViewModels.Interfaces;
 using XamarinClient.ViewModels.Models;
@@ -22,13 +23,13 @@ namespace XamarinClient.ViewModels
 			 : base(navigationService, dialogService)
 		{
 			Title = "Чат клиент";
-			client = new ClientModel("127.0.0.1", 8888);
 			Messages = new ObservableCollection<MessageViewModel>();
 			BindingBase.EnableCollectionSynchronization(Messages, null, ObservableCollectionCallBack);
+			StartMessaging().Wait();
 		}
 
 		/// <summary>Клиент для соединения с сервером</summary>
-		private readonly ClientModel client;
+		private ClientModel client;
 
 		private MessageViewModel currentmessage;
 		public MessageViewModel CurrentMessage
@@ -56,11 +57,12 @@ namespace XamarinClient.ViewModels
 		}
 
 		/// <summary>Запуск прослушки порта</summary>
-		private void StartMessaging()
+		private async Task StartMessaging()
 		{
 			try
 			{
-				client.Connect();
+				client = new ClientModel("127.0.0.1", 50005);
+				await client.Connect();
 				client.ExceptionEvent += ShowError;
 				client.Connected += IsConnectedTrueMethod;
 				client.Disconected += IsConnectedFalsMethod;

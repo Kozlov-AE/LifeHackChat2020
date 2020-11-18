@@ -37,7 +37,7 @@ namespace Logic.TCPConnection
         }
 
         /// <summary> Подключиться к серверу </summary>
-        public void Connect()
+        public async Task Connect()
         {
             client = new TcpClient();
             while (!client.Connected)

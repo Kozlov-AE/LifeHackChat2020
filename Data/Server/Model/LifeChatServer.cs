@@ -47,7 +47,7 @@ namespace Logic.Server.Model
         {
             try
             {
-                tcpListener = new TcpListener(IPAddress.Any, 8888);
+                tcpListener = new TcpListener(IPAddress.Any, 50005);
                 tcpListener.Start();
 
                 OnStarted?.Invoke("Сервер запущен, ожидание подключений...");

@@ -5,6 +5,7 @@ using XamarinClient.Views;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Forms;
+using XamarinClient.ViewModels.DesignData;
 
 namespace XamarinClient
 {

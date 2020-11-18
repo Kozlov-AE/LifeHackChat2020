@@ -11,7 +11,7 @@ namespace LifeHackChat2020_Console
         {
             try
             {
-            client = new ClientModel("127.0.0.1", 8888);
+            client = new ClientModel("127.0.0.1", 50005);
             client.Connect();
             client.ExceptionEvent += ExceptionPrint;
             client.Connected += PrintConnected;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -36,7 +37,7 @@ namespace NetStandartData
       }
 
       /// <summary> Подключиться к серверу </summary>
-      public void Connect()
+      public async Task Connect()
       {
          client = new TcpClient();
          while (!client.Connected)
@@ -50,6 +51,7 @@ namespace NetStandartData
             catch (Exception ex)
             {
                ExceptionEvent?.Invoke("Метод подключения", new ExceptionHandler(ex.Message));
+               Debug.WriteLine(ex.Message);
                Thread.Sleep(1000);
             }
          }
