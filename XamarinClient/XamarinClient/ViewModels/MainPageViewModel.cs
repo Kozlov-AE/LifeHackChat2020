@@ -61,7 +61,7 @@ namespace XamarinClient.ViewModels
 		{
 			try
 			{
-				client = new ClientModel("127.0.0.1", 50005);
+				client = new ClientModel("192.168.0.105", 50005);
 				await client.Connect();
 				client.ExceptionEvent += ShowError;
 				client.Connected += IsConnectedTrueMethod;
