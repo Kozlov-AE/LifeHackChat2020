@@ -26,6 +26,8 @@ namespace XamarinClient.ViewModels
 			Messages = new ObservableCollection<MessageViewModel>();
 			BindingBase.EnableCollectionSynchronization(Messages, null, ObservableCollectionCallBack);
 			StartMessaging().Wait();
+
+			SendMessageCommand = new DelegateCommand(SendMessage);
 		}
 
 		/// <summary>Клиент для соединения с сервером</summary>
@@ -47,6 +49,18 @@ namespace XamarinClient.ViewModels
 
 		public ObservableCollection<MessageViewModel> Messages { get; private set; }
 
+		private string insertedMessage;
+		public string InsertedMessage
+		{
+			get { return insertedMessage; }
+			set { SetProperty(ref insertedMessage, value); }
+		}
+
+		#region Commands
+		/// <summary>Комманда отправки сообщения</summary>
+		public DelegateCommand SendMessageCommand { get; }
+		#endregion
+
 		/// <summary>Метод лока для коллекции Messages</summary>
 		void ObservableCollectionCallBack (IEnumerable collection, object context, Action accessMethod, bool writeAccess)
 		{
@@ -61,7 +75,8 @@ namespace XamarinClient.ViewModels
 		{
 			try
 			{
-				client = new ClientModel("192.168.0.105", 50005);
+				client = new ClientModel("192.168.0.103", 50005);
+				//client = new ClientModel("127.0.0.1", 50005);
 				await client.Connect();
 				client.ExceptionEvent += ShowError;
 				client.Connected += IsConnectedTrueMethod;
@@ -109,6 +124,26 @@ namespace XamarinClient.ViewModels
 			client.SendMessage(message);
 		}
 
+		private void SendMessage()
+		{
+			//Если пустая строка или пробел или еще чего не то, то выходим из метода и на всякий случй однуляем ввод
+			if (string.IsNullOrWhiteSpace(InsertedMessage))
+			{
+				this.InsertedMessage = null;
+				return;
+			}
+			Messages.Add(new MessageViewModel(InsertedMessage, "Я"));
+			//Проверяем не введено ли слово "пока" для выхода из программы
+			if (InsertedMessage.ToLower() == "пока" || InsertedMessage.ToLower() == "/пока")
+			{
+				client.Dispose();
+				Environment.Exit(0);
+			}
+
+			client.SendMessage(InsertedMessage);
+			this.InsertedMessage = null;
+		}
+
 		/// <summary>Алерт об ошибке</summary>
 		/// <param name="errorTxt">Текст ошибки</param>
 		private async void ShowError(string errorTxt)
@@ -120,13 +155,13 @@ namespace XamarinClient.ViewModels
 			await DialogService.DisplayAlertAsync("Ошибка!", handler.Message, "Ок");
 		}
 
-		/// <summary>Устонавливает флаг состояния подключения в true</summary>
+		/// <summary>Устанавливает флаг состояния подключения в true</summary>
 		private void IsConnectedTrueMethod()
 		{
 			this.IsConnected = true;
 		}
 
-		/// <summary>Устонавливает флаг подключения в false</summary>
+		/// <summary>Устанавливает флаг подключения в false</summary>
 		private void IsConnectedFalsMethod()
 		{
 			this.IsConnected = false;

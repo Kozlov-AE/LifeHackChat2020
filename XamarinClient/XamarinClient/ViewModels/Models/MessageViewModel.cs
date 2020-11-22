@@ -33,5 +33,14 @@ namespace XamarinClient.ViewModels.Models
 			set { SetProperty(ref sender, value); }
 		}
 
+		public MessageViewModel(string text, string sender)
+		{
+			this.Date = DateTime.Now;
+			this.Sender = sender;
+			this.Text = text;
+		}
+
+		public MessageViewModel()
+		{}
 	}
 }

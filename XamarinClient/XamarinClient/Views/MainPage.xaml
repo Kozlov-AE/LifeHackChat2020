@@ -3,42 +3,78 @@
     x:Class="XamarinClient.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:XamarinClient.Views"
     Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="iam">
+                <ViewCell>
+                    <ViewCell.View>
+                        <StackLayout
+                            Padding="10,0,0,0"
+                            BackgroundColor="#98FB98"
+                            HorizontalOptions="End"
+                            Orientation="Vertical">
+                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                <Label
+                                    HorizontalOptions="Start"
+                                    Text="{Binding Sender}"
+                                    TextColor="#006400" />
+                                <Label
+                                    HorizontalOptions="End"
+                                    Text="{Binding Date}"
+                                    TextColor="Goldenrod" />
+                            </StackLayout>
+                            <Label
+                                FontSize="Body"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{Binding Text}"
+                                TextColor="Black" />
+                        </StackLayout>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="another">
+                <ViewCell>
+                    <ViewCell.View>
+                        <Frame Padding="5" BorderColor="Black">
+                            <StackLayout Orientation="Vertical">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label
+                                        HorizontalOptions="Start"
+                                        Text="{Binding Sender}"
+                                        TextColor="#8A2BE2" />
+                                    <Label
+                                        HorizontalOptions="End"
+                                        Text="{Binding Date}"
+                                        TextColor="Goldenrod" />
+                                </StackLayout>
+                                <Label
+                                    FontSize="Body"
+                                    HorizontalOptions="StartAndExpand"
+                                    Text="{Binding Text}"
+                                    TextColor="Black" />
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+            <local:MessageDataTemplateSelector
+                x:Key="messageSelector"
+                AnotherTemplate="{StaticResource another}"
+                IAmDataTemplate="{StaticResource iam}" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <!--  Лист сообщений  -->
         <ListView
             x:Name="messageList"
             HasUnevenRows="True"
-            ItemsSource="{Binding Messages}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ViewCell.View>
-                            <Frame Padding="5" BorderColor="Black">
-                                <StackLayout Orientation="Vertical">
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label
-                                            HorizontalOptions="Start"
-                                            Text="{Binding Sender}"
-                                            TextColor="BlueViolet" />
-                                        <Label
-                                            HorizontalOptions="End"
-                                            Text="{Binding Date}"
-                                            TextColor="Goldenrod" />
-                                    </StackLayout>
-                                    <Label
-                                        FontSize="Body"
-                                        HorizontalOptions="StartAndExpand"
-                                        Text="{Binding Text}"
-                                        TextColor="Black" />
-                                </StackLayout>
-                            </Frame>
-                        </ViewCell.View>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            ItemTemplate="{StaticResource}"
+            ItemsSource="{Binding Messages}"
+            SeparatorVisibility="None" />
         <!--  область отправки сообщения  -->
         <Grid VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
@@ -48,21 +84,24 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
+            <!--  Строка ввода сообщения  -->
             <Editor
                 Grid.Row="0"
                 Grid.Column="0"
                 AutoSize="TextChanges"
                 Keyboard="Default"
                 Placeholder="Введите сообщение серверу"
-                PlaceholderColor="LightGray" />
+                PlaceholderColor="LightGray"
+                Text="{Binding InsertedMessage, Mode=TwoWay}" />
+            <!--  Кнопка отправки сообщения  -->
             <ImageButton
                 Grid.Row="0"
                 Grid.Column="1"
+                Command="{Binding SendMessageCommand}"
                 HorizontalOptions="CenterAndExpand"
                 Source="images/sendButton.png"
                 VerticalOptions="CenterAndExpand" />
         </Grid>
         <StackLayout />
     </StackLayout>
-
 </ContentPage>
