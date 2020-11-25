@@ -17,9 +17,7 @@ namespace Logic.Server.ClientCommandHandler
         Dictionary<string?, MethodInfo> commands;
 
         public CommandHandler()
-        {
-            GetCommandList();
-        }
+        => GetCommandList();
 
         /// <summary>Получить список команд из класса <see cref="MessageHandler"/> и сохранить его в словарь класа</summary>
         void GetCommandList()
@@ -27,7 +25,7 @@ namespace Logic.Server.ClientCommandHandler
             commands = typeof(MessageHandler)
                 .GetMethods()
                 .Where(m => m.GetCustomAttribute<CommandAttribute>() != null)
-                .ToDictionary(m => m.GetCustomAttribute<CommandAttribute>()!.Name);
+                .ToDictionary(m => m.GetCustomAttribute<CommandAttribute>()!.Name.ToLower());
         }
 
         /// <summary>Выполнение метода из словаря</summary>
@@ -38,7 +36,7 @@ namespace Logic.Server.ClientCommandHandler
         public void ExecuteCommand(object obj, string command, ClientGroups group, object[] par = null)
         {
             MethodInfo? method;
-            if (!commands.TryGetValue(command, out method))
+            if (!commands.TryGetValue(command.ToLower(), out method))
             {
                 Exception?.Invoke("Введенная команда не найдена");
                 return;
