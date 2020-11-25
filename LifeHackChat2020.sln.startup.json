@@ -20,7 +20,7 @@
         "Projects": {
           "Server": {},
           "XamarinClient.IOS": {}
-        }
+      }
       },
       "Server + UWP": {
         "Projects": {

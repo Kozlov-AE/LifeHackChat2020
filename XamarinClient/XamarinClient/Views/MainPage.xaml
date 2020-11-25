@@ -87,20 +87,13 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
-
-            <!--  Строка ввода сообщения  -->
-
             <Editor
                 Grid.Row="0"
                 Grid.Column="0"
                 AutoSize="TextChanges"
                 Keyboard="Default"
                 Placeholder="Введите сообщение серверу"
-                PlaceholderColor="LightGray"
-                Text="{Binding InsertedMessage, Mode=TwoWay}" />
-
-            <!--  Кнопка отправки сообщения  -->
-
+                PlaceholderColor="LightGray" />
             <ImageButton
                 Grid.Row="0"
                 Grid.Column="1"
